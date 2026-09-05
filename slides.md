@@ -2,17 +2,24 @@
 theme: seriph
 aspectRatio: 16/9
 colorSchema: dark
-layout: cover
-title: ZurichJS Conf 2026
-class: text-center
+layout: default
+title: How to make full-stack frameworks work on a platform like Netlify
+class: cover-intro
 transition: slide-left
 comark: true
 duration: 25min
 hideInToc: true
+src: ./pages/1_intro.md
 ---
 
-# ZurichJS Conf 2026
-
+---
+src: ./pages/2_static.md
 ---
 
-# Hello world
+---
+src: ./pages/3_builds.md
+---
+
+---
+src: ./pages/4_full-stack.md
+---
