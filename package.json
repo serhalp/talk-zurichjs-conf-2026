@@ -6,8 +6,8 @@
     "build": "slidev build",
     "dev": "slidev --open",
     "export": "slidev export",
-    "format": "oxfmt --write .",
-    "format:check": "oxfmt --check ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@slidev/cli": "^52.19.1",
@@ -15,8 +15,9 @@
     "@slidev/theme-seriph": "latest",
     "vue": "^3.5.33"
   },
+  "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457",
   "devDependencies": {
-    "oxfmt": "0.66.0"
-  },
-  "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457"
+    "prettier": "3.9.6",
+    "prettier-plugin-slidev": "1.0.5"
+  }
 }

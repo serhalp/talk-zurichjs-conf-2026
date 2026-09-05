@@ -1,0 +1,10 @@
+.agents/
+.claude/
+.codex/
+node_modules/
+dist/
+.remote-assets/
+.vite-inspect/
+components.d.ts
+pnpm-lock.yaml
+skills-lock.json
