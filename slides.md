@@ -27,3 +27,8 @@ src: ./pages/4_full-stack.md
 ---
 src: ./pages/5_adapters.md
 ---
+
+---
+src: ./pages/6_no-adapter.md
+---
+

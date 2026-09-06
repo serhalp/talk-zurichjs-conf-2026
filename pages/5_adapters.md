@@ -653,7 +653,7 @@ export default {
 </div>
 <div v-else-if="$clicks === 1" class="svelte-code">
 
-```ts [Adapter and Builder API (selected members)]
+```ts [Adapter and Builder API]
 interface Adapter {
   name: string;
   adapt(builder: Builder): void | Promise<void>;
@@ -1017,16 +1017,15 @@ Sources: https://docs.astro.build/en/reference/adapter-reference/ ; https://svel
 ---
 level: 2
 class: authored
-clicks: 7
-title: "Nitro: adapter API and all the adapters"
+clicks: 8
+title: "Nitro: an adapter API and all the adapters"
 ---
 
-<h1 v-if="$clicks < 3">Nitro: adapter API <em>and</em> all the adapters</h1>
+<h1 v-if="$clicks < 3">Nitro: an adapter API <em>and</em> all the adapters</h1>
 <h1 v-else>ZurichCloud Nitro preset</h1>
 
 <img v-if="$clicks < 7" src="/nitro.svg" alt="Nitro" class="absolute right-14 top-10 w-12 h-12" />
-<div v-else class="absolute right-14 top-3 flex flex-col items-end gap-2">
-  <LevelBadge :number="5" class="!mb-0">Full stack</LevelBadge>
+<FrontendCloudLevel v-else :celebrate="$clicks >= 8">
   <div class="flex items-center gap-4">
   <img src="/astro.svg" alt="Astro" class="w-10 h-10 brightness-0 invert" />
   <img src="/svelte.svg" alt="SvelteKit" class="w-10 h-10 brightness-0 invert" />
@@ -1035,9 +1034,9 @@ title: "Nitro: adapter API and all the adapters"
   <NuxtArrival />
   <AnalogArrival />
   </div>
-</div>
+</FrontendCloudLevel>
 
-<div class="grid gap-9" :class="$clicks < 3 ? 'grid-cols-2' : 'grid-cols-1'">
+<div class="grid gap-9" :class="[$clicks < 3 ? 'grid-cols-2' : 'grid-cols-1', { 'nitro-cleared': $clicks >= 8 }]">
 <div class="nitro-presets">
 
 <!-- prettier-ignore -->
@@ -1080,7 +1079,7 @@ zurich-cloud/
 
 </div>
 </div>
-<div v-if="$clicks >= 4" class="nitro-preset-sketch mt-2">
+<div v-if="$clicks >= 4" class="nitro-preset-sketch mt-2" :class="{ 'nitro-cleared': $clicks >= 8 }">
 
 <!-- prettier-ignore -->
 ````md magic-move [zurich-cloud/preset.ts] {at:5} {duration:700}
@@ -1132,6 +1131,8 @@ export default defineNitroPreset({
 <style>
 h1 { margin-bottom: 16px !important; }
 .nitro-presets, .nitro-preset-sketch { --slidev-code-line-height: 1.1; }
+.nitro-cleared { opacity: 0; pointer-events: none; transition: opacity 400ms ease; }
+@media (prefers-reduced-motion: reduce) { .nitro-cleared { transition: none; } }
 </style>
 
 <!--
@@ -1143,7 +1144,7 @@ Click 2: add and highlight our hypothetical zurich-cloud directory, including pr
 
 Click 3: collapse the other directories and remove the explanatory text, keeping just our preset directory. Change the title to ZurichCloud Nitro preset.
 
-Click 4: open preset.ts below the directory excerpt, starting with defineNitroPreset and the preset's identity. Click 5: add our runtime entry. Click 6: configure the client and server output locations. Click 7: add the compiled hook, fading the previous configuration, and reveal the Level 5 badge with Nitro fading in and shaking.
+Click 4: open preset.ts below the directory excerpt, starting with defineNitroPreset and the preset's identity. Click 5: add our runtime entry. Click 6: configure the client and server output locations. Click 7: add the compiled hook, fading the previous configuration, and reveal the Level 5 badge with the logo entrances. Click 8: fade out the content below the title, move the badge and logos to the center, then level up to Level 6: Frontend cloud.
 
 This is a sketch using Nitro v2's actual defineNitroPreset API, entry, output, compiled hook, name and url fields. The ZurichCloud target and paths are fictional. url resolves the relative runtime entry; publicDir and serverDir control output locations. Nitro performs the build with these options, then calls compiled. Its body is intentionally omitted: our code would translate routing and static rules into ZurichCloud's format.
 
@@ -1158,18 +1159,48 @@ Sources: https://github.com/nitrojs/nitro/blob/v2/src/presets/_all.gen.ts ; http
 level: 2
 class: authored
 clicks: 3
+title: Nitro is becoming a Vite plugin
 ---
 
-# Nitro is becoming a Vite plugin
+<h1>Nitro is becoming a Vite plugin</h1>
+
+<NitroChoiceTransition :step="$clicks">
+<template #comparison>
 
 <NitroEvolution :evolved="false" />
 <div v-click="1" class="mt-2 leading-tight">TanStack Start and SolidStart no longer include Nitro:</div>
 <NitroEvolution v-click="1" :evolved="true" class="mt-2" />
 
-<div class="mt-2 flex flex-col gap-3 leading-tight">
-  <span v-click="2"><em>Users</em> install the Nitro Vite plugin.</span>
-  <span v-click="3">Users can also choose alternative deployment plugins.</span>
-</div>
+</template>
+<template #nitro>
+
+<!-- prettier-ignore -->
+```ts [vite.config.ts] {3,6}
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
+
+export default {
+  plugins: [tanstackStart(), react(), nitro()],
+};
+```
+
+</template>
+<template #alternative>
+
+<!-- prettier-ignore -->
+```ts [vite.config.ts] {3,6}
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import zurich from "@zurich/tanstack-start/vite";
+
+export default {
+  plugins: [tanstackStart(), react(), zurich()],
+};
+```
+
+</template>
+</NitroChoiceTransition>
 
 <style>
 h1 { margin-bottom: 8px !important; }
@@ -1179,6 +1210,8 @@ h1 { margin-bottom: 8px !important; }
 About 30–45 seconds. Start with the familiar Nuxt diagram: Nuxt includes Nitro v2, and Nitro contains both its builder and our platform preset. The previous slide showed how we implement that preset.
 
 Click 1: reveal the TanStack Start diagram below, keeping the Nuxt/Nitro v2 diagram visible above for comparison. Vite is the outer box in the lower diagram; TanStack Start and Nitro v3 participate as separate plugins. Nitro contains the deployment preset, while the framework sits alongside it. The server label represents build output passing through the shared Vite build, not a direct plugin-to-plugin API.
+
+Click 2: fade out the diagrams, keeping the slide title. Bring “Users install the Nitro Vite plugin” up beneath it. The TanStack Start React configuration appears automatically after the move. Click 3: show the alternative deployment plugin sentence and a second configuration using our fictional ZurichCloud TanStack Start Vite plugin. These are alternatives, not two plugins to install together. The ZurichCloud package name is invented; the Nitro setup follows TanStack's hosting documentation, with Vite's optional defineConfig helper omitted.
 
 TanStack Start removed built-in Nitro, and SolidStart v2 made the same architectural move. Users can choose Nitro or a direct platform deployment plugin, including Netlify and Cloudflare. The point is that Nitro is optional, not that its presets have disappeared. Nuxt remains the v2 example; don't imply Nuxt removed Nitro.
 

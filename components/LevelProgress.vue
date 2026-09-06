@@ -5,9 +5,15 @@ const props = defineProps<{ level: number }>();
 const raised = ref(false);
 const title = computed(
   () =>
-    ["", "Static", "Static++", "Builds", "Zero config", "Full stack"][
-      props.level
-    ],
+    [
+      "",
+      "Static",
+      "Static++",
+      "Builds",
+      "Zero config",
+      "Full stack",
+      "Frontend cloud",
+    ][props.level],
 );
 watch(
   () => props.level,
