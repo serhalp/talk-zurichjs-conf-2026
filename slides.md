@@ -23,3 +23,7 @@ src: ./pages/3_builds.md
 ---
 src: ./pages/4_full-stack.md
 ---
+
+---
+src: ./pages/5_adapters.md
+---

@@ -19,7 +19,7 @@ class: authored
     <path d="M244 96 H342 m-10 -7 10 7 -10 7" fill="none" stroke="#67e8f9" stroke-width="2" />
     <text x="293" y="77" text-anchor="middle" fill="#67e8f9" style="font-size: 22px">Upload</text>
     <rect x="358" y="43" width="186" height="108" rx="12" fill="#132a32" stroke="#67e8f9" stroke-width="2" />
-    <image href="/zurichjs.svg" x="371" y="55" width="160" height="24">
+    <image href="/zurich-cloud.svg" x="371" y="55" width="160" height="24">
       <title>ZurichCloud</title>
     </image>
     <text x="451" y="121" text-anchor="middle" fill="#67e8f9" style="font-size: 30px">CDN</text>

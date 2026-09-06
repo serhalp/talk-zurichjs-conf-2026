@@ -20,7 +20,7 @@ class: authored
   ]" />
 </div>
 
-<svg v-click="2" viewBox="0 0 868 174" class="ssr-flow" role="img" aria-label="A cat represents the visitor using a browser to request hello.zurich.cloud/about. A ZurichCloud server calls Nuxt and returns the rendered About page.">
+<svg v-click="2" viewBox="0 0 868 174" class="ssr-flow" role="img" aria-label="A cat represents the visitor using a browser to request hello.zurich.cloud/about. A ZurichCloud server calls Astro and returns the rendered About page.">
   <image href="/patak-cat.png" x="2" y="48" width="78" height="78"><title>patak's cat, the visitor</title></image>
   <text x="41" y="151" text-anchor="middle" fill="#cbd5e1" style="font-size: 18px">Visitor</text>
   <rect x="104" y="5" width="336" height="164" rx="12" fill="#17202e" stroke="#94a3b8" stroke-width="2" />
@@ -36,11 +36,11 @@ class: authored
   <text x="517" y="153" text-anchor="middle" fill="#cbd5e1" style="font-size: 20px">HTML</text>
 
   <rect x="594" y="5" width="272" height="164" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
-  <image href="/zurichjs.svg" x="609" y="20" width="142" height="22"><title>ZurichCloud</title></image>
+  <image href="/zurich-cloud.svg" x="609" y="20" width="142" height="22"><title>ZurichCloud</title></image>
   <text x="851" y="37" text-anchor="end" fill="#cbd5e1" style="font-size: 18px">Server</text>
   <rect x="614" y="60" width="232" height="90" rx="8" fill="#132a32" stroke="#67e8f9" stroke-width="2" />
-  <image href="/nuxt.svg" x="634" y="73" width="34" height="28" style="filter: brightness(0) invert(1)" />
-  <text x="682" y="96" fill="#e2e8f0" style="font-size: 24px">Nuxt</text>
+  <image href="/astro.svg" x="634" y="73" width="34" height="28" style="filter: brightness(0) invert(1)" />
+  <text x="682" y="96" fill="#e2e8f0" style="font-size: 24px">Astro</text>
   <text x="730" y="132" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 20px">render(request)</text>
 </svg>
 
@@ -57,7 +57,7 @@ The user wants to render pages at request time. Introduce frameworks that suppor
 
 Click 1: server-side rendering, or SSR. Show the framework logos together, with the same automatic stagger as the SSG and bundler rows. These frameworks also support other rendering modes; this slide only introduces their ability to render pages in response to requests.
 
-Click 2: reuse the browser, cat, and /about URL. The request reaches a ZurichCloud server, which calls Nuxt to render the page and returns HTML to the browser. The render(request) label is conceptual pseudocode, not a literal public Nuxt API. Keep this about pages; API handlers and server functions come later.
+Click 2: reuse the browser, cat, and /about URL. The request reaches a ZurichCloud server, which calls Astro to render the page and returns HTML to the browser. The render(request) label is conceptual pseudocode, not a literal public Astro API. Keep this about pages; API handlers and server functions come later.
 
 No account-page or authentication example here. The next slides explain the browser/server split, deployment shapes, and how the platform invokes the framework.
 -->
@@ -94,7 +94,7 @@ export const config = {
     <text x="567" y="132" text-anchor="middle" fill="#cbd5e1" style="font-size: 18px">Response</text>
   </g>
   <rect x="622" y="3" width="244" height="136" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
-  <image href="/zurichjs.svg" x="642" y="18" width="148" height="24" />
+  <image href="/zurich-cloud.svg" x="642" y="18" width="148" height="24" />
   <rect x="642" y="59" width="204" height="58" rx="8" fill="#132a32" stroke="#67e8f9" />
   <text x="744" y="95" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 24px">hello.ts</text>
 </svg>
@@ -178,7 +178,7 @@ What if we generate that function when we build the user's site?
 
 Same kind of function. Instead of returning Hello world, it asks the framework to render a page and returns the HTML.
 
-Initially: import the framework's server entry point. The import and render signature are illustrative, not an actual Nuxt API.
+Initially: import the framework's server entry point. The import and render signature are illustrative, not an actual Astro API.
 
 Click 1: add the function, with placeholder HTML and a text/html response.
 
@@ -200,63 +200,110 @@ class: authored
 
 # The story so far
 
-<LevelBadge :number="5">Full stack</LevelBadge>
+<LevelProgress v-click="1" :level="Math.min(Math.max($clicks, 1), 5)" />
 
 </div>
 
 <svg class="mt-5" viewBox="0 0 868 350" role="img" aria-label="One build deploys static assets to the CDN and server code to ZurichCloud Functions. The visitor requests a rendered page from a function, then JavaScript and CSS from the CDN.">
-  <rect x="284" y="1" width="300" height="62" rx="10" fill="#132a32" stroke="#67e8f9" stroke-width="2" />
-  <text x="434" y="23" text-anchor="middle" fill="#cbd5e1" font-family="monospace" style="font-size: 18px">build_command</text>
-  <text x="434" y="49" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 22px">$ nuxt build</text>
+  <defs>
+    <marker id="summary-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
   <g v-click="1">
-    <path d="M334 63V83H175V133l-6 -9m6 9l6 -9 M534 63V83H693V133l-6 -9m6 9l6 -9" fill="none" stroke="#94a3b8" stroke-width="2" />
-    <rect x="30" y="88" width="290" height="29" fill="#111111" />
-    <text x="175" y="109" text-anchor="middle" fill="#fcd34d" font-family="monospace" style="font-size: 18px">publish_dir: dist/client/</text>
-    <rect x="594" y="88" width="198" height="29" fill="#111111" />
-    <text x="693" y="109" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 18px">.zurich/ssr.ts</text>
-    <rect x="10" y="135" width="330" height="86" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
-    <image href="/zurichjs.svg" x="28" y="150" width="142" height="23" />
-    <text x="320" y="171" text-anchor="end" fill="#f8fafc" style="font-size: 24px">CDN</text>
-    <text x="175" y="202" text-anchor="middle" fill="#fcd34d" style="font-size: 22px">Static files</text>
-    <rect x="528" y="135" width="330" height="86" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
-    <image href="/zurichjs.svg" x="546" y="150" width="142" height="23" />
-    <text x="840" y="171" text-anchor="end" fill="#f8fafc" style="font-size: 24px">Functions</text>
-    <text x="693" y="202" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 22px">render(request)</text>
+    <rect x="10" y="115" width="330" height="76" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
+    <image href="/zurich-cloud.svg" x="28" y="128" width="142" height="23" />
+    <text x="320" y="149" text-anchor="end" fill="#f8fafc" style="font-size: 24px">CDN</text>
+    <text x="175" y="180" text-anchor="middle" fill="#fcd34d" style="font-size: 22px">{{ $clicks < 5 ? "/about.html" : "Static files" }}</text>
   </g>
   <g v-click="2">
+    <rect x="30" y="82" width="290" height="25" fill="#111111" />
+    <text x="175" y="103" text-anchor="middle" fill="#fcd34d" font-family="monospace" style="font-size: 18px">publish_dir: dist/client/</text>
+  </g>
+  <g v-click="3">
+  <rect x="284" y="1" width="300" height="62" rx="10" fill="#132a32" stroke="#67e8f9" stroke-width="2" />
+  <text x="434" y="23" text-anchor="middle" fill="#cbd5e1" font-family="monospace" style="font-size: 18px">build_command</text>
+  <text x="434" y="49" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 22px">$ astro build</text>
+    <path d="M334 63V83H175V87 M175 107V115" fill="none" stroke="#94a3b8" stroke-width="2" />
+  </g>
+  <g v-click="4" fill="#bef264" font-family="monospace" style="font-size: 18px">
+    <rect x="600" y="18" width="110" height="30" rx="8" fill="#202b18" />
+    <text x="655" y="39" text-anchor="middle">✨ Auto</text>
+    <rect x="334" y="82" width="110" height="30" rx="8" fill="#202b18" />
+    <text x="389" y="103" text-anchor="middle">✨ Auto</text>
+  </g>
+  <g v-click="5">
+    <path d="M534 63V83H693V115" fill="none" stroke="#94a3b8" stroke-width="2" />
+    <rect x="594" y="82" width="198" height="25" fill="#111111" />
+    <text x="693" y="103" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 18px">.zurich/ssr.ts</text>
+    <rect x="528" y="115" width="330" height="76" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
+    <image href="/zurich-cloud.svg" x="546" y="128" width="142" height="23" />
+    <text x="840" y="149" text-anchor="end" fill="#f8fafc" style="font-size: 24px">Functions</text>
+    <text x="693" y="180" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 22px">render(request)</text>
+  </g>
+  <g v-click="1">
     <image href="/patak-cat.png" x="212" y="281" width="62" height="62" />
     <rect x="294" y="276" width="400" height="71" rx="10" fill="#17202e" stroke="#64748b" stroke-width="2" />
     <path d="M294 309H694" stroke="#64748b" />
     <text x="310" y="299" fill="#e2e8f0" font-family="monospace" style="font-size: 18px">hello.zurich.cloud/<tspan fill="#f0abfc">about</tspan></text>
     <text x="310" y="335" fill="#f8fafc" style="font-size: 22px">About Zurich</text>
-    <path d="M710 310H814V233l-6 9m6 -9l6 9" fill="none" stroke="#67e8f9" stroke-width="2" />
-    <text x="792" y="253" text-anchor="end" fill="#67e8f9" style="font-size: 19px">/about</text>
-    <text x="792" y="279" text-anchor="end" fill="#cbd5e1" style="font-size: 19px">← HTML</text>
+    <g :class="{ 'page-at-function': $clicks >= 5 }" class="page-roundtrip">
+      <path class="page-request" marker-end="url(#summary-arrow)" fill="none" stroke="currentColor" stroke-width="2" />
+      <path class="page-response" marker-end="url(#summary-arrow)" fill="none" stroke="#cbd5e1" stroke-width="2" />
+      <g class="page-route-labels">
+        <text x="400" y="208" text-anchor="middle" fill="currentColor" style="font-size: 19px">/about</text>
+        <text x="400" y="261" text-anchor="middle" fill="#cbd5e1" style="font-size: 18px">HTML</text>
+      </g>
+    </g>
   </g>
   <g v-click="3">
-    <path d="M320 276V263H44V233l-6 9m6 -9l6 9" fill="none" stroke="#fcd34d" stroke-width="2" />
+    <path d="M320 268V266Q320 258 312 258H60Q48 258 48 246V201" marker-start="url(#summary-arrow)" marker-end="url(#summary-arrow)" fill="none" stroke="#fcd34d" stroke-width="2" stroke-linecap="round" />
     <text x="10" y="290" fill="#fcd34d" font-family="monospace" style="font-size: 18px">/app.a1b2.js</text>
     <text x="10" y="316" fill="#fcd34d" font-family="monospace" style="font-size: 18px">/app.c3d4.css</text>
   </g>
 </svg>
 
-<Achievement v-click="4">Congratulations, you've caught up to Cloudflare Pages, c. 2021!</Achievement>
+<Achievement v-click="6">Congratulations, you've caught up to Cloudflare Pages, c. 2021!</Achievement>
 
 <style>
 .summary-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 h1, h2 { margin: 0 !important; }
+.page-roundtrip { color: #fcd34d; transition: color 750ms ease; }
+.page-request {
+  d: path("M470 268L470 226Q470 216 460 216L270 216Q260 216 260 206L260 201");
+  transition: d 750ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.page-response {
+  d: path("M280 201L280 230Q280 240 290 240L490 240Q500 240 500 250L500 268");
+  transition: d 750ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.page-route-labels { transition: transform 750ms cubic-bezier(0.65, 0, 0.35, 1); }
+.page-at-function { color: #67e8f9; }
+.page-at-function .page-request { d: path("M470 268L470 226Q470 216 480 216L740 216Q750 216 750 206L750 201"); }
+.page-at-function .page-response { d: path("M770 201L770 230Q770 240 760 240L510 240Q500 240 500 250L500 268"); }
+.page-at-function .page-route-labels { transform: translateX(220px); }
+@media (prefers-reduced-motion: reduce) {
+  .page-roundtrip, .page-request, .page-response, .page-route-labels { transition: none; }
+}
+
 </style>
 
 <!--
-The story so far: one build can prepare both parts of the deployment. Use nuxt build as the concrete build command. The output paths and ZurichCloud integration remain illustrative, not Nuxt defaults.
+The story so far: one build can prepare both parts of the deployment. Use astro build as the concrete build command. The output paths and ZurichCloud integration remain illustrative, not Astro defaults.
 
-Click 1: publish_dir selects the static files for the CDN. Separately, the generated ZurichCloud function calls the built server entry. Server code is not uploaded as public files. The diagram abbreviates the server output to its generated function wrapper.
+Initially: title only.
 
-Click 2: the visitor asks for /about. ZurichCloud invokes the SSR function and sends the HTML back to the browser.
+Click 1: Level 1. The cat requests /about; the CDN returns /about.html. Both request and HTML response are visible. Replay the capabilities we have unlocked.
 
-Click 3: that HTML references JavaScript and CSS. The browser requests those files from the same site, and the CDN serves them. The filenames are illustrative content hashes. The browser runs the JavaScript; the CDN serves bytes.
+Click 2: Level 2, publish_dir selects the files to upload.
 
-Click 4: Cloudflare Pages added integrated functions in beta on November 17, 2021. This milestone is about deploying static files and functions together, not the exact runtime or API shown here. Source: https://blog.cloudflare.com/cloudflare-pages-goes-full-stack/
+Click 3: Level 3, run astro build before deploying those files. Add the second round trip: the browser fetches hashed JavaScript and CSS from the CDN.
+
+Click 4: Level 4, detect Astro and configure both the build command and publish directory automatically. Matching sparkle Auto tags appear beside both settings. The paths remain illustrative ZurichCloud output, not Astro defaults.
+
+Click 5: Level 5, add the SSR function and animate the existing /about round trip from the CDN to Functions. The page is now rendered at request time; its assets still come from the CDN. Server code is not uploaded as public files. The badge bounces only on forward level changes.
+
+Click 6: Cloudflare Pages added integrated functions in beta on November 17, 2021. This milestone dates the combined deployment capability, not the exact runtime or API shown here. Source: https://blog.cloudflare.com/cloudflare-pages-goes-full-stack/
 
 We are glossing over infrastructure topology. CDN files and functions are distinct deployment outputs, not necessarily distinct public hostnames. In this fictional platform, existing static files take precedence over the /* SSR fallback. We will return to routing later.
 -->
