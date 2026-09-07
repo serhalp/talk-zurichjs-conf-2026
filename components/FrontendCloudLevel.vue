@@ -3,20 +3,27 @@ import { useIsSlideActive } from "@slidev/client";
 import { ref, watch } from "vue";
 
 const active = useIsSlideActive();
-const props = defineProps<{ celebrate: boolean }>();
-const level = ref(5);
+const props = withDefaults(
+  defineProps<{
+    celebrate: boolean;
+    initialLevel?: number;
+    message?: string;
+  }>(),
+  { initialLevel: 5 },
+);
+const level = ref(props.initialLevel);
 const congratulated = ref(false);
 
 watch(
   [active, () => props.celebrate],
   ([isActive, celebrate], _previous, onCleanup) => {
-    level.value = 5;
+    level.value = props.initialLevel;
     congratulated.value = false;
     if (!isActive || !celebrate) return;
 
     // Finish the fade and move, then pause half a second before leveling up.
     const timer = setTimeout(() => {
-      level.value = 6;
+      level.value = props.initialLevel + 1;
     }, 1850);
     const bubbleTimer = setTimeout(() => {
       congratulated.value = true;
@@ -36,8 +43,11 @@ watch(
     <slot />
     <Transition name="congratulations">
       <div v-if="congratulated" class="congratulations-bubble">
-        Congratulations, you now employ a
-        <span class="whitespace-nowrap">full-time</span> frameworks team.
+        <template v-if="message">{{ message }}</template>
+        <template v-else>
+          Congratulations, you now employ a
+          <span class="whitespace-nowrap">full-time</span> frameworks team.
+        </template>
       </div>
     </Transition>
   </div>

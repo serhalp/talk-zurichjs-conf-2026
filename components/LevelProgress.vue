@@ -13,6 +13,7 @@ const title = computed(
       "Zero config",
       "Full stack",
       "Frontend cloud",
+      "Frontend cloud, hard mode",
     ][props.level],
 );
 watch(

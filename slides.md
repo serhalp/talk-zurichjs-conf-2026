@@ -32,3 +32,7 @@ src: ./pages/5_adapters.md
 src: ./pages/6_no-adapter.md
 ---
 
+---
+src: ./pages/7_nextjs-adapters.md
+---
+

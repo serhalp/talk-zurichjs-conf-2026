@@ -58,12 +58,12 @@ The GIF is bundled locally for offline presentation. Source: https://knowyourmem
 ---
 level: 2
 class: authored
-clicks: 20
+clicks: 18
 ---
 
 # Next.js: build first, "adapt" later
 
-<img v-if="$clicks < 19" src="/nextjs.svg" alt="Next.js" class="absolute right-14 top-10 w-12 h-12 brightness-0 invert" />
+<img src="/nextjs.svg" alt="Next.js" class="absolute right-14 top-10 w-12 h-12 brightness-0 invert" />
 
 <NextOutputWalkthrough>
 <div v-if="$clicks <= 1" key="diagram" class="next-pipeline-stage">
@@ -94,7 +94,7 @@ clicks: 20
 
 </div>
 
-<div v-else-if="$clicks < 19" key="preview" class="next-manifest-layout">
+<div v-else key="preview" class="next-manifest-layout" :class="{ 'minimal-mode-show': $clicks === 13 }">
 <div class="manifest-preview">
 <Transition name="manifest-step" mode="out-in">
 <div v-if="$clicks === 4" key="prerender">
@@ -197,20 +197,12 @@ clicks: 20
   <p>Oh, there's a secret, even less documented mode for <em>a</em> serverless platform, but you <em>really</em> don't want to go there.</p>
   <img v-if="$clicks === 13" src="/war-flashback-dog.gif" alt="Stains the dog having war flashbacks" class="war-flashback-dog" />
 </div>
-</div>
-<div v-else key="iceberg" class="next-iceberg-stage">
-  <NextIceberg class="compact-iceberg" />
-  <div v-click="20" class="iceberg-congratulations">
-    Congratulations, you've doubled the size of your frameworks team
-  </div>
+<img v-if="$clicks === 13" src="/next-minimal-mode.png" alt="Next.js source sets minimalMode from minimalMode or process.env.NEXT_PRIVATE_MINIMAL_MODE" class="minimal-mode-source" />
 </div>
 </NextOutputWalkthrough>
 
 <style>
 h1 { margin-bottom: 12px !important; }
-.next-iceberg-stage { padding-top: 12px; }
-.compact-iceberg { display: block; width: 680px; margin: 0 auto; }
-.iceberg-congratulations { width: 760px; margin: 12px auto 0; padding: 12px 24px; border: 2px solid #94a3b8; border-radius: 28px; background: #17202e; color: #f8fafc; font-size: 28px; line-height: 1.25; text-align: center; }
 .next-pipeline-stage { position: relative; padding-top: 20px; }
 .pipeline-callout { position: absolute; left: 124px; bottom: 36px; display: flex; align-items: center; gap: 12px; color: #cbd5e1; }
 .pipeline-callout svg { color: #bef264; }
@@ -225,6 +217,10 @@ h1 { margin-bottom: 12px !important; }
 .serverless-aside { grid-column: 1 / -1; display: flex; align-items: center; gap: 24px; width: 800px; margin: 0 auto; color: #cbd5e1; line-height: 1.3; }
 .serverless-aside p { flex: 1; margin: 0; border-left: 2px solid #94a3b8; padding-left: 16px; }
 .war-flashback-dog { width: 100px; flex-shrink: 0; border-radius: 6px; }
+.minimal-mode-show { padding-top: 0; row-gap: 10px; }
+.minimal-mode-show .manifest-explanation p { margin-bottom: 8px; }
+.minimal-mode-show .war-flashback-dog { width: 72px; }
+.minimal-mode-source { grid-column: 1 / -1; width: 800px; margin: 0 auto; border-radius: 6px; }
 .edge-thought { position: absolute; top: 320px; left: 48px; width: 390px; padding: 14px 20px; border: 2px solid #94a3b8; border-radius: 32px; background: #17202e; line-height: 1.25; }
 .edge-thought svg { position: absolute; left: 100%; top: -80px; width: 100px; height: 100px; overflow: visible; fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .manifest-cat { display: inline-block; width: 36px; margin-left: 4px; vertical-align: middle; border-radius: 3px; opacity: 0; animation: manifest-cat-peek 10s 5s ease-in-out infinite; }
@@ -250,7 +246,7 @@ Click 1: reveal "This is a whole other talk though...". Click 2: carry .next/ fr
 
 Both JSON previews are selected fields with illustrative /about values, not complete manifests or captured build output. The shapes and fields come from what the real integration consumes. Additional version, route, runtime, and file metadata is omitted.
 
-Clicks 15–18 reveal the remaining maintenance costs one at a time. Click 19 clears the content, keeps the title, and reveals the Next.js iceberg: we've only just begun to scratch the surface. Click 20: "Congratulations, you've doubled the size of your frameworks team".
+Clicks 15–18 reveal the remaining maintenance costs one at a time. The iceberg and congratulations now follow the build-plugin slide as their own slide.
 
 The first preview is prerender-manifest.json. plugin-context.ts reads it directly. content/prerendered.ts reads initialRevalidateSeconds, src/data route information, and HTML/RSC/metadata files to construct cache entries for upload. We must understand the runtime meaning, not just parse JSON. Don't teach ISR here; the 60 is background revalidation information, not a generic CDN TTL.
 
@@ -332,4 +328,38 @@ Click 2: package the transformation work from the previous slide as a build plug
 Click 3: remember zero config? Detect Next.js and select/install/run our integration automatically, so users don't have to wire this up themselves. Framework detection is separate from invoking the hook. It chooses which plugin to run; the build pipeline decides when to run it. This makes the experience automatic for users while leaving the integration maintenance with our frameworks team.
 
 The diagram omits install, caching, packaging, and other lifecycle steps. Its purpose is the placement of the post-build integration between the framework build and deployment.
+-->
+
+---
+level: 2
+class: authored
+clicks: 2
+---
+
+# Next.js: build first, "adapt" later
+
+<div class="next-iceberg-stage">
+  <NextIceberg class="compact-iceberg" />
+  <div class="iceberg-level">
+    <NextHardModeLevel :visible="$clicks >= 2" />
+  </div>
+  <div v-click="1" class="iceberg-congratulations">
+    Congratulations, you've doubled the size of your frameworks team
+  </div>
+</div>
+
+<style>
+h1 { margin-bottom: 12px !important; }
+.compact-iceberg { display: block; width: 560px; margin: 0 auto; }
+.iceberg-congratulations { width: 780px; margin: 24px auto 0; padding: 10px 24px; border: 2px solid #94a3b8; border-radius: 28px; background: #17202e; color: #f8fafc; font-size: 28px; line-height: 1.25; text-align: center; }
+.iceberg-level { display: flex; justify-content: center; margin-top: 18px; min-height: 38px; }
+</style>
+
+<!--
+We've shown some of the output transformations and how the platform runs them after every build. We've only just begun to scratch the surface.
+
+Click 1: Congratulations, you've doubled the size of your frameworks team.
+Click 2: reveal the Level 6 badge above the congratulations. One second after its entry animation finishes, level up to 7: Frontend cloud, hard mode. Keep the iceberg and congratulations visible.
+
+This closes the maintenance story before the OpenNext collaboration: we weren't the only ones doing this.
 -->
