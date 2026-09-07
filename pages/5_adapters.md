@@ -908,7 +908,7 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-The adapter's build output. ZurichCloud discovers functions in .zurich/functions and packages each entrypoint with its imported server code, manifest, and dependencies. The adapter does not run esbuild itself. The regular Netlify Functions path in the real SvelteKit adapter follows this division of responsibility; its explicit esbuild step is for Edge Functions. The directory names here remain our fictional platform contract. Static/prerendered files take precedence over the catch-all function.
+The adapter's build output. ZurichCloud discovers functions in .zurich/functions and packages each entry point with its imported server code, manifest, and dependencies. The adapter does not run esbuild itself. The regular Netlify Functions path in the real SvelteKit adapter follows this division of responsibility; its explicit esbuild step is for Edge Functions. The directory names here remain our fictional platform contract. Static/prerendered files take precedence over the catch-all function.
 -->
 
 ---
@@ -977,7 +977,7 @@ Click 3: tease the later Vite interoperability section, without opening another 
 
 Philippe's implementation context: today Netlify only supplies a React Router Vite plugin. It cannot control user-defined serverBundles (custom server bundle splitting) through that Vite surface; that information lives in React Router's configuration. Don't imply that React Router itself cannot expose it.
 
-Optional bridge for the later Vite section: custom server bundle splitting is a concrete example of why the platform needs both request entrypoints and routing information. If the framework exposes those through the shared Vite surface, the platform plugin can consume them without reaching into React Router's config. Keep this as a brief example if time allows; no extra slide or preset detour in the 25-minute talk.
+Optional bridge for the later Vite section: custom server bundle splitting is a concrete example of why the platform needs both request entry points and routing information. If the framework exposes those through the shared Vite surface, the platform plugin can consume them without reaching into React Router's config. Keep this as a brief example if time allows; no extra slide or preset detour in the 25-minute talk.
 
 There are also templates that leave the server and platform wiring in the user's project. That makes the platform visible, with the same ownership tradeoff we just discussed. Avoid attributing a blanket anti-abstraction position to the team without a direct source.
 

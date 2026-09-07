@@ -4,7 +4,6 @@ aspectRatio: 16/9
 colorSchema: dark
 layout: default
 title: How to make full-stack frameworks work on a platform like Netlify
-class: cover-intro
 transition: slide-left
 comark: true
 duration: 25min
@@ -36,3 +35,10 @@ src: ./pages/6_no-adapter.md
 src: ./pages/7_nextjs-adapters.md
 ---
 
+---
+src: ./pages/8_shared-platforms.md
+---
+
+---
+src: ./pages/9_request-contracts.md
+---
