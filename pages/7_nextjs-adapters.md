@@ -423,3 +423,30 @@ https://nextjs.org/blog/nextjs-across-platforms
 https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/
 Philippe's firsthand account in this conversation supplies the group's transition and personal collaboration details.
 -->
+
+---
+level: 2
+layout: center
+class: authored co-op-slide
+title: Co-op mode
+clicks: 2
+---
+
+<div class="co-op-interstitial">
+  <LevelProgress :level="$clicks >= 1 ? 8 : 7" />
+  <CoopPlayers :active="$clicks >= 1" />
+  <p v-click="2">Meanwhile, we’ve been grinding through other campaigns…</p>
+</div>
+
+<style>
+.co-op-interstitial { display: flex; flex-direction: column; align-items: center; }
+.co-op-interstitial :deep(.level-badge) { margin: 0; }
+.co-op-interstitial :deep(.level-number) { display: flex; align-items: center; padding: 14px 18px; font-size: 24px; }
+.co-op-interstitial :deep(.level-title) { display: flex; align-items: center; padding: 14px 22px; font-size: 30px; white-space: pre; }
+.co-op-interstitial p { position: relative; top: 24px; margin: 44px 0 0; font-size: 32px; }
+</style>
+
+<!--
+Bring back the Level 7 badge from the Next.js iceberg. Click 1 changes hard mode to co-op mode: collaboration with competing platforms and the framework team improved the situation. Level up from 7 to 8: Frontend cloud, co-op mode. After the level-up, six meeple-like players labeled P1–P6 join one at a time automatically. Their space is reserved from the start.
+Click 2: Meanwhile, we’ve been grinding through other campaigns… The next slide expands from one adapter to the framework × platform matrix. Establish repeated integration work before introducing Vite as a possible common layer.
+-->

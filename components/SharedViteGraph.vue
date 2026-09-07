@@ -62,8 +62,14 @@ const frameworks = [
       <rect x="4" y="110" width="860" height="62" rx="12" class="box" />
       <image href="/vite.svg" x="28" y="120" width="42" height="42" />
       <text x="86" y="152" class="vite-name">Vite</text>
-      <text v-if="platforms" x="225" y="152" class="detail">
-        Shared framework ↔ platform contracts
+      <text
+        v-if="platforms"
+        x="434"
+        y="152"
+        text-anchor="middle"
+        class="detail"
+      >
+        🧴 Glue?
       </text>
       <g v-else>
         <g

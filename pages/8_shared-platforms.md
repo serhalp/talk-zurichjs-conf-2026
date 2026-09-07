@@ -241,7 +241,7 @@ clicks: 2
 </div>
 
 <p v-click="1" class="big-line">What belongs in Vite? What information is missing?</p>
-<p v-click="2" class="future-aside" style="line-height: 1.8">🤝 We agreed on the vision.<br />So let's get to work.</p>
+<p v-click="2" class="future-aside" style="line-height: 1.8">🤝 We agreed on the vision.<br />And dug in...</p>
 
 <style>
 .vite-collaborators { display: flex; justify-content: space-around; gap: 28px; margin: 48px 0 32px; }

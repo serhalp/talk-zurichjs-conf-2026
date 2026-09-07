@@ -19,7 +19,7 @@ withDefaults(
         >
         <span><img src="/nuxt.svg" alt="" class="surface-mono" />Nuxt</span>
       </div>
-      <p>We write an adapter for that framework.</p>
+      <p>We write <u>an adapter</u> for these frameworks.</p>
     </div>
     <div class="vite-surface" :class="{ 'surface-hidden': !showVite }">
       <h2><img src="/vite.svg" alt="" />Vite</h2>
@@ -41,7 +41,7 @@ withDefaults(
           ></span
         >
       </div>
-      <p>We write a Vite plugin for that framework.</p>
+      <p>We write <u>a Vite plugin</u> for these frameworks.</p>
     </div>
   </div>
 </template>
@@ -104,6 +104,10 @@ withDefaults(
   margin: 24px 0 0;
   font-size: 24px;
   line-height: 1.4;
+}
+.integration-surfaces u {
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
 }
 .focus-vite .framework-surface,
 .focus-framework .vite-surface {

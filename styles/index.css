@@ -38,6 +38,10 @@
   color: #bef264;
 }
 
+.authored h1 > .gap-number + .gap-number {
+  margin-left: -11px;
+}
+
 .authored .big-line {
   font-size: 36px;
   line-height: 1.5;

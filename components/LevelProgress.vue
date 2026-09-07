@@ -14,6 +14,7 @@ const title = computed(
       "Full stack",
       "Frontend cloud",
       "Frontend cloud, hard mode",
+      "Frontend cloud, co-op mode",
     ][props.level],
 );
 watch(

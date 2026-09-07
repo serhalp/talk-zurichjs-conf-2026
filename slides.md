@@ -42,3 +42,7 @@ src: ./pages/8_shared-platforms.md
 ---
 src: ./pages/9_request-contracts.md
 ---
+
+---
+src: ./pages/10_deployment-metadata.md
+---

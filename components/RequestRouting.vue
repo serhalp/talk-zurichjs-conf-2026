@@ -4,18 +4,18 @@ defineProps<{ routed: boolean }>();
 
 <template>
   <svg
-    viewBox="0 0 868 275"
+    viewBox="0 0 868 204"
     role="img"
     aria-label="Requests to about and API cart must be routed to different request handlers"
   >
-    <image href="/patak-cat.png" x="0" y="90" width="94" height="94" />
+    <image href="/patak-cat.png" x="0" y="60" width="94" height="94" />
     <g
       v-for="(route, index) in [
         { url: '/about', name: 'SSR function' },
         { url: '/api/cart', name: 'API function' },
       ]"
       :key="route.url"
-      :transform="`translate(0, ${index * 146})`"
+      :transform="`translate(0, ${index * 100})`"
     >
       <rect x="122" y="24" width="350" height="68" rx="8" class="box" />
       <text x="138" y="52" class="host">hello.zurich.cloud</text>

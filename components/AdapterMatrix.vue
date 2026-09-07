@@ -181,10 +181,10 @@ const columnNumberVisible = (column: number) =>
           Vite
         </text>
         <text x="290" y="244" text-anchor="middle" class="shared-label">
-          Shared
+          🧴
         </text>
         <text x="290" y="268" text-anchor="middle" class="shared-label">
-          contracts
+          Glue?
         </text>
         <path
           v-for="(_, column) in platforms"

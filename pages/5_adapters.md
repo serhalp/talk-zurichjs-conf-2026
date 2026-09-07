@@ -497,7 +497,7 @@ clicks: 4
 
 <p class="rules-label">The user can tell Astro:</p>
 
-```ts [astro.config.ts (excerpt)]
+```ts [astro.config.ts]
 redirects: {
   "/old": "/new",
 },
