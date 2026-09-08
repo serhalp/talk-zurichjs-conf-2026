@@ -26,14 +26,8 @@ clicks: 11
 </style>
 
 <!--
-Return to the repeated work we saw before the Next.js detour. Astro × Netlify, SvelteKit × Netlify, Astro × Cloudflare: different implementations, much of the same job.
-This is an illustrative responsibility matrix, NOT a claim that every cell has a released adapter. The Waku row and ZurichCloud column are examples of ecosystem growth, not release announcements.
-Start with Astro + Netlify and @astrojs/netlify. Click 1 moves the same logos and package into one matrix cell, with the package abbreviated to braces. Click 2 adds SvelteKit, React Router, and TanStack Start. Click 3 adds Cloudflare and Vercel.
-Clicks 4–5 highlight @sveltejs/adapter-cloudflare and @vercel/react-router in turn: separate integration codebases and npm packages, not necessarily separate Git repositories. The Vercel package supplies a React Router preset, rather than a standalone deployment implementation.
-Click 6 clears the callout and adds Waku. Platform counts 1–3 appear with its cells, one after another. Click 7 adds ZurichCloud and column count 4, then counts the framework rows as that column fills from top to bottom.
-Click 8 hides the slide contents and shows the final-form meme. Click 9 brings back and shrinks the matrix and automatically interleaves more frameworks with Deno Deploy, AWS Amplify, and Firebase. At the end the open-ended axes become N frameworks and M platforms: an N × M problem. This remains an illustrative responsibility matrix, not a released-support chart. Click 10 highlights TanStack Start's row: all M platform integrations. Click 11 highlights ZurichCloud's column: all N framework integrations.
-Vercel package name and preset: https://vercel.com/docs/frameworks/frontend/react-router
-The original RFC's N-by-M motivation and missing integrations: https://github.com/vitejs/vite/discussions/20907
+- Each cell: separate codebase + package.
+- Matrix shows integration work, not a support chart.
 -->
 
 ---
@@ -60,9 +54,7 @@ clicks: 3
 </style>
 
 <!--
-This is the cost to users, not just an engineering-efficiency argument. Limited maintainer time means the most popular combinations tend to get attention first. It is a structural tendency, not a claim that every launch follows this exact schedule.
-Keep the long tail in the story: new ideas should not need a full collection of custom adapters before people can use them.
-Source and speaker's argument: https://github.com/vitejs/vite/discussions/20907
+- Maintenance limits become user limitations.
 -->
 
 ---
@@ -78,9 +70,7 @@ clicks: 3
 <p v-click="3" class="future-takeaway">Vite sits between the framework and the platform.</p>
 
 <!--
-We have seen Vite throughout the earlier adapter examples. It handles client and server builds and local development. The Environment API gives frameworks and platform plugins a common place to configure environments and participate in their lifecycle.
-The diagram shows selected Vite-based frameworks. It doesn't include Next.js and doesn't claim every framework uses Vite or delegates orchestration identically.
-Sources: https://vite.dev/guide/api-environment and the scope discussion https://github.com/vitejs/ecosystem/issues/3
+- Vite grew beyond browser bundling: server builds + dev.
 -->
 
 ---
@@ -95,9 +85,9 @@ clicks: 1
 <AdapterMatrix :step="10" overview :highlight-vite="$clicks >= 1" />
 
 <!--
-Bring back the same matrix. On click, highlight the Vite-based frameworks; Next.js remains unhighlighted. Angular is yellow for the in-progress direction Philippe will explain aloud, with no on-slide status label.
-This compares their relationship to Vite, not whether every framework/platform integration exists or whether every framework uses Vite identically for dev, client builds, and server builds. Angular's current CLI integration and the direction toward deeper Vite integration should not be conflated.
-Ember's modern build uses Embroider as a Vite plugin: https://guides.emberjs.com/release/build-tools/vite/
+- Angular: deeper integration in progress.
+- Nuxt/Analog: Nitro handles the server build.
+- Ember: Embroider.
 -->
 
 ---
@@ -113,12 +103,8 @@ clicks: 2
 <p v-click="2" class="future-takeaway">Let's start with frameworks where Vite is the integration surface.</p>
 
 <!--
-Name the distinction already shown in the earlier framework diagrams: which integration surface can the platform use? This is not a mutually exclusive taxonomy of frameworks as toolchains versus plugins. Astro and SvelteKit also use Vite; React Router has presets as discussed earlier. These are the integration paths we have been following in this talk.
-For Astro and SvelteKit, the framework adapter API provides framework-specific information. For our React Router and TanStack Start integrations, Vite is the shared surface, so missing information becomes an obstacle there.
-Nuxt's framework-side deployment integration goes through the Nitro preset API discussed earlier, rather than a Nuxt-specific adapter API. SolidStart 2 joins the Vite examples through its deployment-plugin architecture.
-Waku and Qwik were considered but omitted from this deliberately simple comparison. Waku documents its own waku/adapters/* surface. Qwik calls its Vite deployment configurations adapters, and also has framework-specific request middleware; it is a mixed case rather than a clean illustration of a Vite-only integration surface. These boxes are examples, not exhaustive disjoint categories.
-Sources: https://waku.gg/ ; https://qwik.dev/docs/deployments/ ; https://docs.solidjs.com/solid-start/v2/guides/deployment-plugins
-Start with the Vite-plugin path. The next section asks what common contracts would let a platform plugin serve more than one framework. Return to the framework-adapter path after discovery, invocation, and routing: those adapters can declare the same information and delegate common work.
+- Which API does the platform talk to? Both groups use Vite.
+- Nuxt’s adapter surface is Nitro presets.
 -->
 
 ---
@@ -153,12 +139,7 @@ clicks: 4
 </style>
 
 <!--
-Recall the earlier slide: TanStack Start moved away from bundling Nitro into the framework and is implemented as a Vite plugin. Netlify's TanStack Start support provided the concrete moment of recognition.
-We are deliberately following the Vite integration path first. We will return to Astro and SvelteKit's own adapter APIs after establishing the shared contracts.
-Philippe's original RFC links a historical plugin with no TanStack-specific implementation logic. That was possible because it assumed which server bundle entry was the handler. It wasn't a universal contract and could not safely cover arbitrary frameworks or advanced configurations.
-Use this as firsthand motivation, not a claim about the current plugin source or a guarantee that all frameworks already work.
-Historical code: https://github.com/netlify/primitives/blob/413ef5dcf37c7324ce4465dd5566b0e5c5199792/packages/vite-plugin-tanstack-start/src/main.ts
-RFC: https://github.com/vitejs/vite/discussions/20907
+- Generic code; framework knowledge hidden in assumptions.
 -->
 
 ---
@@ -183,10 +164,7 @@ clicks: 2
 </style>
 
 <!--
-This is the proposed architecture, not today's universal compatibility. Each platform still owns its deployment logic. Each framework still needs to provide the shared information and target a compatible runtime.
-One reusable plugin per platform does not eliminate all framework-specific adapters. Astro and SvelteKit can delegate common work to that plugin, while retaining their own adapter APIs. Nitro can also participate; this isn't an anti-Nitro proposal.
-The actual reduction is toward framework declarations plus platform implementations, rather than an implementation for every pair. Avoid presenting N as a literal accounting identity that erases the framework-side work.
-Scope: https://github.com/vitejs/ecosystem/issues/3
+- Framework describes output. Platform owns deployment.
 -->
 
 ---
@@ -220,9 +198,8 @@ clicks: 1
 </style>
 
 <!--
-Start with the same full matrix. On click, its repeated cells converge into one plugin per platform; Vite provides a shared contract between participating frameworks and platform implementations.
-This is the goal, not a claim that these integrations already exist. Next.js stays visible but faded, outside the Vite connections. Frameworks still need to expose the common information, and framework-specific adapter APIs can remain. Nitro and Angular's integration paths have their own caveats, discussed earlier.
-The change is from pair-specific implementations toward framework-side declarations plus reusable platform implementations, not the elimination of framework-side work.
+- Framework declarations still needed.
+- One platform implementation, reused across frameworks.
 -->
 
 ---
@@ -250,9 +227,8 @@ clicks: 2
 </style>
 
 <!--
-Philippe talked with the TanStack team, heard Cloudflare was exploring similar ideas, and compared notes with them and the Vite core team. This is a second collaboration story, now across frameworks as well as platforms.
-The May 6, 2026 ecosystem call agreed the intended scope, recorded May 11 in ecosystem issue 3. That is agreement on direction, not approval or release of every proposed API. Request fulfillment belongs in Vite's scope; other platform features need a separate layer or direct configuration.
-Source: https://github.com/vitejs/ecosystem/issues/3#issuecomment-4421073692
+- Thank the Vike/Photon folks: Universal Deploy + their help.
+- Acknowledge Nitro’s cross-framework deployment work.
 -->
 
 ---
@@ -278,7 +254,5 @@ clicks: 4
 </style>
 
 <!--
-The original four buckets from Philippe's outline. We will solve discovery and invocation together, then explain routing, then separate the final feature bucket from Vite core.
-This is not four independent finished proposals: entry point discovery and Fetchable signatures share one concrete RFC; routing remains an open design; deployment metadata is a separate effort.
-Source: https://github.com/vitejs/vite/discussions/20907
+- Discovery + invocation go together. Routing still open.
 -->

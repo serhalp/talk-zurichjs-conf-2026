@@ -103,14 +103,8 @@ routeRules: {
 </style>
 
 <!--
-The fourth bucket. The scope discussion separates request fulfillment from other platform configuration. Framework adapters can carry such configuration, or a framework may deliberately leave it to users to configure directly on their platform.
-After the initial list, clicks 5–8 focus Image CDN / redirects and rewrites / static response headers / skew protection respectively. Fade the other rows and show one example and verdict at a time. The image code is hidden until click 5. The NO / maybe / maybe / rainbow no idea badges are Philippe's spoken positioning on Vite core scope, not assertions that a platform or framework lacks these features. The tiny skew diagram shows an old tab reaching its matching server while a newer deployment exists; the fuller explanation follows later.
-For a framework implemented purely as a Vite plugin, exposing these features requires another communication channel. That is a design choice to make explicitly, not an argument that every framework must hide the platform.
-Source: https://github.com/vitejs/ecosystem/issues/3
-The image excerpt uses Astro's real image.remotePatterns setting to authorize remote image optimization. The surrounding defineConfig call is omitted. A deployment adapter can translate this intent into platform Image CDN configuration; this is not itself a platform API. Source checked September 7: https://docs.astro.build/en/guides/images/#authorizing-remote-images
-Redirects/rewrites and static response headers are distinct rows. Their placement here is a discussion aid, not an assertion redirects cannot belong to routing. The final …? invites consideration of further cases rather than claiming this list is exhaustive.
-The redirect example uses real Nuxt routeRules, with defineNuxtConfig omitted. The shorthand uses Nitro's default redirect status; no specific status is claimed on the slide. Sources checked September 7: https://nuxt.com/docs/4.x/guide/concepts/rendering ; https://v2.nitro.build/config#routerules
-The headers example also uses Nuxt routeRules. Keep familiar frameworks here; using Nuxt twice is preferable to introducing Vike just for variety. This is framework configuration, not a raw HTTP response. Source: https://v2.nitro.build/config#routerules
+- Badges ask “Does this belong in Vite core?”
+- Skew: old browser code, new server deployment.
 -->
 
 ---
@@ -132,10 +126,9 @@ clicks: 7
 </style>
 
 <!--
-The arrows show configuration/integration relationships, not runtime request flow. Green arrows show available connections; a red broken arrow marks Vite plugin → framework as Vite plugin, where the framework-specific adapter surface is absent. Start with Web developer, SvelteKit, Vite, the ZurichCloud SvelteKit adapter, and ZurichCloud. Click 1 draws developer connections in sequence. Click 2 adds SvelteKit → Vite. Click 3 draws adapter → SvelteKit, Vite, ZurichCloud. Click 4 introduces TanStack Start with developer → TanStack Start → Vite, fading the SvelteKit side. Click 5 introduces the ZurichCloud Vite plugin and its developer, Vite, and platform connections. Click 6 shows the straight red broken connection to TanStack Start. Click 7 restores the SvelteKit side for comparison.
-Compare framework as Vite plugin (TanStack) with framework with adapters (SvelteKit). The web developer connects directly to both frameworks, Vite, both platform integrations, and ZurichCloud. Both frameworks point into shared Vite. Both platform integrations point UP into Vite and DOWN into ZurichCloud.
-The distinguishing connection is ZurichCloud adapter → framework with adapters, running straight up beside Vite. The adapter has a framework-specific integration API; the generic Vite plugin only has the shared Vite surface. This is an integration-surface comparison, not a claim JavaScript plugins are literally incapable of communicating.
-The cat represents the web developer. No Tanner photo or config-filename annotations. The developer → Vite connection runs straight down between the two frameworks, keeping it clear of the red broken arrow.
+- Integration APIs, not HTTP traffic.
+- Red arrow: no framework-specific adapter API.
+- Choosing Vite also means choosing its limits.
 -->
 
 ---
@@ -156,8 +149,6 @@ clicks: 4
 </style>
 
 <!--
-Connect the interaction diagram to a deliberate framework design choice. We can choose not to expose every platform feature as framework configuration. This is one possible boundary, not a claim that these features must be configured this way or never need coordination.
-Start with the same four features. Click 1 moves Image CDN configuration into “Configure on the platform.” Click 2 moves redirects/rewrites. Click 3 moves static response headers. Users can configure those directly if the framework leaves them out of its own surface; framework-generated routing/header requirements are a separate matter.
-Click 4 fades that choice and highlights skew protection. For the strategy we're exploring, the platform provides a deployment identifier and supported request carriers; the framework needs to attach that metadata to the requests its generated client code makes. Platform configuration alone cannot express that whole interaction. The next slide proposes a communication contract outside Vite core.
-This does not claim every skew-protection implementation requires the same mechanism. It motivates the coordinated approach in proposed VDM0001: https://github.com/vitejs/deployment-metadata/blob/db8dc777a405dfca0f65af8b883c5f56c8c8e9fa/metadata/proposed/VDM0001/spec.md
+- Deliberate framework scope choice.
+- Skew strategy: platform supplies deployment ID; framework tags requests.
 -->

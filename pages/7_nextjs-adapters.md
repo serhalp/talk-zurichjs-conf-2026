@@ -10,10 +10,6 @@ hideInToc: true
 .reality-line { font-size: 44px; line-height: 1.4; text-align: center; color: #a5f3fc; }
 </style>
 
-<!--
-Pause the ZurichCloud role play here. The next slides tell the real story of the teams working together on Next.js deployment support.
--->
-
 ---
 class: authored
 clicks: 4
@@ -66,17 +62,8 @@ clicks: 4
 </style>
 
 <!--
-About 35 seconds. This is where we leave the fictional platform and tell the real collaboration story.
-
-Start: three teams were solving similar deployment problems for different infrastructure. OpenNext started with the AWS adapter; Netlify and Cloudflare later joined the broader effort.
-
-Click 1: So we joined forces.
-Click 2: OpenNext became the umbrella. These remain separate adapters, not one shared implementation. The connecting lines represent collaboration, not build output.
-Click 3: share findings and fixes where possible, compare the things we keep having to reverse-engineer, and advocate together.
-Click 4: transition from maintaining workarounds to working with the framework team on a supported contract.
-
-Source: https://opennext.js.org/ (checked 2026-09-06). Its overview describes the AWS origins, the three adapters, and the joint deployment API effort.
-The first-person collaboration story comes from Philippe's talk notes in this conversation.
+- OpenNext began with AWS.
+- Shared umbrella; still separate adapters.
 -->
 
 ---
@@ -125,19 +112,8 @@ h1 { margin-bottom: 24px !important; }
 </style>
 
 <!--
-Tell the collaboration story at its own pace; trim after rehearsing the complete deck.
-
-Start: we put together a document of the challenges making Next.js work on Netlify. We went through the integration, its hacks and assumptions, and the things we needed from the framework.
-Clicks 1–2: Cloudflare did the same, and so did OpenNext AWS. The document icons are schematic, not reproductions of their actual documents.
-Click 3: we discussed this with Jimmy Lai, who was leading the Next.js team at Vercel. Use his name, not the speech transcription "Jimmy Lay". This role and the conversations are Philippe's firsthand account, not a claim about Jimmy's present title.
-Click 4: Jimmy became a great partner. This was a constructive engineering conversation about real constraints, not just asking a competitor to fix our problems.
-
-The personal sequence and assessment of the partnership come from Philippe's account in this conversation. The Next.js retrospective also quotes Philippe about compiling the integration problems and identifying the missing stable contract.
-
-Sources, checked 2026-09-07:
-https://github.com/vercel/next.js/discussions/77740
-https://nextjs.org/blog/nextjs-across-platforms
-https://nextjs.org/blog/next-16 (Jimmy Lai's name)
+- Jimmy Lai.
+- Real constraints → trusted engineering partner.
 -->
 
 ---
@@ -161,10 +137,7 @@ h1 { margin-bottom: 24px !important; }
 </style>
 
 <!--
-The original public RFC announcement, April 2, 2025. The live discussion has since been updated. Screenshot supplied by Philippe.
-
-The proposal grew out of the concrete deployment challenges we shared with the Next.js team.
-Source: https://github.com/vercel/next.js/discussions/77740
+- Public RFC: April 2, 2025.
 -->
 
 ---
@@ -204,15 +177,9 @@ clicks: 3
 </style>
 
 <!--
-We started meeting regularly and called this the Next.js Deployment Adapters Working Group. We had bi-weekly calls, alongside ongoing conversations on Discord and GitHub.
-
-Clicks 1–2: we brought in the Google Cloud team, then AWS Amplify. This order is Philippe's firsthand account; don't conflate the community's OpenNext AWS adapter with the AWS Amplify team.
-Click 3: we compared the proposed spec with the workarounds in our existing integrations. What would it solve? What would still require reaching into internals? We shared detailed feedback, revised the design, and repeated that process over several months.
-Save the collaboration beyond adapters and the transition to the Ecosystem Working Group for the final slide of this section.
-
-Sources, checked 2026-09-07:
-https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/ (Philippe's March 2026 account: bi-weekly calls, growing group, security and release coordination)
-https://firebase.blog/posts/2026/03/nextjs-adapters/ (James Daniels's account of the working group)
+- Biweekly calls; months of feedback.
+- Google Cloud, then AWS Amplify.
+- OpenNext AWS ≠ AWS Amplify.
 -->
 
 ---
@@ -254,17 +221,8 @@ clicks: 4
 </style>
 
 <!--
-Start: the Next.js team implemented the API and Vercel built its own adapter. They used it internally and learned from real deployments.
-Click 1: Netlify, Cloudflare, OpenNext AWS, and Google Cloud started prototypes of their integrations against the new API. These were spikes, not simultaneous production releases.
-Click 2: implementation exposed more issues. We gave feedback on the actual behavior, they fixed bugs and refined the API, and we tried again. This loop continued through the alpha period; the arrows aren't a strict chronology where all feedback preceded alpha.
-Click 3: the API shipped as alpha in Next.js 16, October 2025. It was already included in the Next.js 16 beta; don't imply the final 16.0 release was its first appearance anywhere.
-Click 4: stable in Next.js 16.2, March 2026. Stable API does not mean every platform's new adapter had shipped.
-
-Sources, checked 2026-09-07:
-https://nextjs.org/blog/next-16 (Build Adapters API alpha)
-https://nextjs.org/blog/next-16-2 (Adapters stable)
-https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/ (Vercel dogfooding and platform implementation work)
-Prototype and feedback details also come from Philippe's firsthand account.
+- Prototypes → feedback → implementation changes.
+- Stable API ≠ every adapter shipped.
 -->
 
 ---
@@ -316,20 +274,8 @@ h1 { margin-bottom: 38px !important; }
 </style>
 
 <!--
-The important decision was to adopt the API for Vercel's own platform, not merely offer it to other platforms. Give Vercel explicit credit for making that commitment and doing the work.
-
-Start: previously the integration was split between private Next.js code paths (including minimal mode) and implementation inside Vercel's closed-source platform. Connect this to the minimal-mode snippet and dog from the earlier slide.
-Click 1: Vercel rebuilt that integration as an open-source Next.js deployment adapter using the public API. The platform itself remains proprietary; the diagram is about the Next.js integration boundary, not open-sourcing Vercel's infrastructure.
-Click 2: one inspectable adapter against the same contract we use. Dogfooding means real requirements from Vercel's deployments exercise that API too. The significance is the deliberate architectural choice, not just another adapter in the list.
-The integration Vercel uses is also a reference implementation other platform teams can read and learn from. Don't claim every existing Vercel project has migrated; the exact rollout percentage isn't established here.
-
-Technical context if useful aloud: the stable contract provides documented, typed build output; breaking changes require a Next.js major. A shared upstream end-to-end test suite is available to adapter authors. These details support the story, but the main point on this slide is Vercel's choice to use the public API themselves.
-
-Sources:
-https://nextjs.org/blog/nextjs-across-platforms (March 25, 2026: stable contract, Vercel's public implementation, breaking-change policy)
-https://nextjs.org/blog/next-16-2
-https://opennext.js.org/
-https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/ (historical private integration and Vercel adopting the public adapter)
+- Credit Vercel: rebuilt its own integration against the same public API.
+- Private mode + platform internals → open-source adapter.
 -->
 
 ---
@@ -369,22 +315,8 @@ clicks: 5
 </style>
 
 <!--
-Status snapshot checked 2026-09-07. Refresh release status before presenting; these rows describe adapters built on the new official API, not whether Next.js works on those platforms today.
-
-Start: Vercel uses its public adapter. Its precise deployment rollout percentage is not established here.
-Click 1: James Daniels's Kubernetes implementation is public at nextjs/adapter-k8s. It grew out of the Google Cloud/GKE work Philippe described. The README says compatibility is verified against the upstream suite, but operational hardening remains; the npm package is not yet published. Say "public implementation," not "production ready" or "GA." Don't discuss its infrastructure in detail here.
-Click 2: Netlify and Cloudflare are rebuilding their integrations around the official API. Philippe expects these soon, but public sources don't establish a release date. Existing integrations already serve users. This can unlock implementation and performance improvements as well as removing maintenance work; don't promise a benchmark.
-Click 3: reveal Cloudflare separately.
-Click 4: the community's OpenNext AWS adapter is also in development against the API. AWS Amplify participated in the design; we haven't verified a public release status for its new implementation, so it isn't assigned one in this table.
-Click 5: the REDACTED stamp. Leave the identity unspecified.
-
-Sources:
-https://nextjs.org/blog/nextjs-across-platforms
-https://github.com/nextjs/adapter-k8s (Status and Quick start)
-https://opennext.js.org/
-https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/
-
-Logo assets embedded locally: OpenNext wordmark extracted from the header SVG at https://opennext.js.org/; Netlify, Cloudflare, AWS Amplify, Google Cloud and Firebase from https://api.iconify.design/logos/ (respective netlify-icon, cloudflare-icon, aws-amplify, google-cloud, firebase assets).
+- New API adapters; existing Next.js deployments already work.
+- Kubernetes: James Daniels, formerly Google.
 -->
 
 ---
@@ -413,15 +345,8 @@ clicks: 2
 </style>
 
 <!--
-When the API became stable, the Deployment Adapters Working Group wrapped up. The collaboration continued in the broader Next.js Ecosystem Working Group.
-
-Click 1: reveal the successor group. Philippe describes this as the original group disbanding and becoming the Ecosystem WG; the public announcement describes a new permanent forum.
-Click 2: the relationships now support more than adapter design: early feedback on upcoming changes, canary issues, and security coordination. Philippe also received contributions from the Next.js core team to Netlify's adapter during the collaboration. The broader forum has public meeting notes and a wider remit.
-
-Sources:
-https://nextjs.org/blog/nextjs-across-platforms
-https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/
-Philippe's firsthand account in this conversation supplies the group's transition and personal collaboration details.
+- Canary feedback, security coordination, core-team PRs to our adapter.
+- Relationships outlasted the adapter project.
 -->
 
 ---
@@ -447,6 +372,5 @@ clicks: 2
 </style>
 
 <!--
-Bring back the Level 7 badge from the Next.js iceberg. Click 1 changes hard mode to co-op mode: collaboration with competing platforms and the framework team improved the situation. Level up from 7 to 8: Frontend cloud, co-op mode. After the level-up, six meeple-like players labeled P1–P6 join one at a time automatically. Their space is reserved from the start.
-Click 2: Meanwhile, we’ve been grinding through other campaigns… The next slide expands from one adapter to the framework × platform matrix. Establish repeated integration work before introducing Vite as a possible common layer.
+- Next.js was one framework. Zoom back out.
 -->

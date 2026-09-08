@@ -53,13 +53,8 @@ h2 { margin-bottom: 20px !important; }
 </style>
 
 <!--
-The user wants to render pages at request time. Introduce frameworks that support this before diving into our toy framework or the platform mechanics.
-
-Click 1: server-side rendering, or SSR. Show the framework logos together, with the same automatic stagger as the SSG and bundler rows. These frameworks also support other rendering modes; this slide only introduces their ability to render pages in response to requests.
-
-Click 2: reuse the browser, cat, and /about URL. The request reaches a ZurichCloud server, which calls Astro to render the page and returns HTML to the browser. The render(request) label is conceptual pseudocode, not a literal public Astro API. Keep this about pages; API handlers and server functions come later.
-
-No account-page or authentication example here. The next slides explain the browser/server split, deployment shapes, and how the platform invokes the framework.
+- SSR = render when a request arrives.
+- render(request) is still our toy example.
 -->
 
 ---
@@ -104,17 +99,8 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-[Section 2: about 5 minutes total.]
-
-We've glossed over the infrastructure so far. To render pages on demand, ZurichCloud needs a new way to run the user's code. Let's introduce serverless functions.
-
-This is our made-up convention: put a TypeScript module in .zurich/. ZurichCloud prepares it to run on the server and calls its default export with a web Request. It returns a web Response. These modules aren't public files.
-
-Click 1: request /functions/hello and ZurichCloud invokes hello.ts. The visitor is outside the browser, as on slide 9.
-
-Click 2: the returned response appears in the browser. We take care of running the code when a request comes in; the user doesn't start a server process.
-
-The exported config maps /functions/hello to this function. The directory and configuration are fictional ZurichCloud conventions, not Netlify APIs. This is the missing platform capability, before we talk about integrating frameworks.
+- Platform runs the code; user doesn’t start a server.
+- Function modules aren’t public files.
 -->
 
 ---
@@ -174,21 +160,7 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-What if we generate that function when we build the user's site?
-
-Same kind of function. Instead of returning Hello world, it asks the framework to render a page and returns the HTML.
-
-Initially: import the framework's server entry point. The import and render signature are illustrative, not an actual Astro API.
-
-Click 1: add the function, with placeholder HTML and a text/html response.
-
-Click 2: replace the placeholder with await render(request). We generate the wrapper at build time; the renderer runs later, when a request arrives.
-
-Click 3: add the routing config.
-
-The generated config routes requests matching /* to this function. We will return to routing and the relationship with static assets later.
-
-Now we can return to the question of where the renderer comes from, and how to call it. Static assets still use the file-serving path we've already built.
+- Generate the wrapper at build time; render at request time.
 -->
 
 ---
@@ -289,21 +261,6 @@ h1, h2 { margin: 0 !important; }
 </style>
 
 <!--
-The story so far: one build can prepare both parts of the deployment. Use astro build as the concrete build command. The output paths and ZurichCloud integration remain illustrative, not Astro defaults.
-
-Initially: title only.
-
-Click 1: Level 1. The cat requests /about; the CDN returns /about.html. Both request and HTML response are visible. Replay the capabilities we have unlocked.
-
-Click 2: Level 2, publish_dir selects the files to upload.
-
-Click 3: Level 3, run astro build before deploying those files. Add the second round trip: the browser fetches hashed JavaScript and CSS from the CDN.
-
-Click 4: Level 4, detect Astro and configure both the build command and publish directory automatically. Matching sparkle Auto tags appear beside both settings. The paths remain illustrative ZurichCloud output, not Astro defaults.
-
-Click 5: Level 5, add the SSR function and animate the existing /about round trip from the CDN to Functions. The page is now rendered at request time; its assets still come from the CDN. Server code is not uploaded as public files. The badge bounces only on forward level changes.
-
-Click 6: Cloudflare Pages added integrated functions in beta on November 17, 2021. This milestone dates the combined deployment capability, not the exact runtime or API shown here. Source: https://blog.cloudflare.com/cloudflare-pages-goes-full-stack/
-
-We are glossing over infrastructure topology. CDN files and functions are distinct deployment outputs, not necessarily distinct public hostnames. In this fictional platform, existing static files take precedence over the /* SSR fallback. We will return to routing later.
+- One build, two deployment outputs.
+- SSR returns HTML; JS/CSS still come from the CDN.
 -->

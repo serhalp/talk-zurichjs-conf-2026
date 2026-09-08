@@ -52,13 +52,7 @@ h2 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-[Section 1: about 3 minutes total.]
-
-Okay, so what does it take to deploy a website?
-
-Let's start with the simplest possible thing. You've got some HTML, some CSS, maybe a bit of JavaScript. There's no framework. There's nothing to build. You already have the website.
-
-What do we actually need to know to deploy it?
+- Start with files. No build needed.
 -->
 
 ---
@@ -111,14 +105,6 @@ class: authored site-directory-demo
 <style>
 h1 { margin-bottom: 12px !important; }
 </style>
-
-<!--
-We need to know which directory contains the stuff you want to deploy. Here it's `site/`.
-
-We upload those files to be served when someone requests them. There's no server application to start. The files are the thing we're deploying. The platform needs their location; it doesn't need to know how we wrote them.
-
-Source: https://docs.netlify.com/build/configure-builds/file-based-configuration/
--->
 
 ---
 level: 2
@@ -214,17 +200,7 @@ h2 { margin-bottom: 8px !important; }
 </style>
 
 <!--
-You can also configure redirects and static response headers. Maybe this old URL should redirect to that new URL. Maybe you want a header on your static files.
-
-Click 1 shows the redirect request. Click 2 brings back the existing config; click 3 adds the redirect with an explicit 301 status. Click 4 introduces the SPA rewrite, and click 5 adds it. Click 6 introduces the header request, and click 7 adds its configuration. Click 8 reveals the congratulations. The name and publish directory stay faded throughout.
-
-For an SPA, unmatched paths should serve index.html without changing the browser's URL. In our made-up platform, existing static files take priority over this fallback rewrite.
-
-So we add three fields to our made-up zurich.json: redirects maps an old path to a destination and status, rewrites maps a request path to the file to serve, and headers assigns response headers to matching paths.
-
-This is our invented configuration format for ZurichCloud. Other platforms express these rules differently.
-
-We don't need to write a backend for either of these things. We'll come back to them, because frameworks sometimes have their own way of expressing the same configuration.
-
-These header rules apply to static responses. A function sets its own response headers.
+- Redirect: browser changes URL. Rewrite: URL stays put.
+- SPA fallback comes after real files.
+- Static headers here; functions set their own.
 -->

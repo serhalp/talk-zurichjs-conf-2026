@@ -106,39 +106,8 @@ h1 { margin-bottom: 18px !important; }
 </style>
 
 <!--
-[Section 5 draft: aim for about 5 minutes across these nine slides.]
-
-Wait. We already unlocked zero config at level 4. Now we've reached full stack, and we're asking the user to write this little function? Start with Level 5 and two ability tabs: Full stack and Zero config.
-
-These two lines know where the framework's server entry point is and how to call it. The import and render API are still illustrative. This repeats the previous slide's convention to make the connection immediate; it is not a real Astro entry point.
-
-Click 1: cross out Zero config and play two automatic level-down beats: 5 to 4, then 4 to 3. This is the joke that manual deployment glue has taken us back to the build-only experience. Full stack remains visible as the capability we are trying to automate.
-
-Click 2: how will users know they need this?
-
-Click 3: should they copy it from our docs?
-
-Click 4: should this be in a bespoke template?
-
-Click 5: the questions transition to Astro, SvelteKit, React Router, Nuxt, and Next.js, appearing one by one without additional clicks.
-
-Click 6: fade out the code and move the first five logos to the left. Reserve three columns so later groups appear without shifting the existing logos.
-
-Click 7: this code will be different for each framework.
-
-Click 8: add TanStack Start, SolidStart, Qwik, Analog, and Angular one by one in the second column.
-
-Click 9: add Fresh, Waku, Cedar, and Hydrogen in the third column, followed by an ellipsis. The list keeps going.
-
-Click 10: and each framework version. We need to maintain compatibility over time; this doesn't mean every release changes the wrapper.
-
-Click 11: high maintenance burden for ZurichCloud.
-
-Click 12: poor DX for users.
-
-Additional logo sources: https://waku.gg/, https://cedarjs.com/, https://hydrogen.shopify.dev/.
-
-The full config and routing aren't repeated in this excerpt. Don't imply that every framework release breaks its public APIs.
+- We made deployment glue the user’s problem.
+- Framework differences × version differences.
 -->
 
 ---
@@ -191,21 +160,7 @@ class: authored
 </style>
 
 <!--
-An adapter packages the platform-specific work we've been doing by hand. It participates in the build, knows how to call the framework, and prepares output for the deployment platform.
-
-Click 1: that includes copying static files, preparing function entry points and their dependencies, and translating routing and other configuration. Not every framework or adapter needs all of these steps.
-
-Click 2: a fix can now be distributed in a patch. Users still have to receive that update and rebuild; dependencies don't update themselves. We stop asking users to hand-edit the generated wrapper.
-
-Click 3: add support for a new Astro feature in a minor.
-
-Click 4: depend on typed, documented Astro interfaces.
-
-Click 5: reveal the level badge in the top right and automatically level up from 3 to 4 to 5.
-
-Click 6: let's build the ZurichCloud Astro adapter.
-
-Keep this about the integration. No need to introduce another toy framework or repeat all of the SSR code we just built.
+- Ship fixes centrally. Users update and rebuild.
 -->
 
 ---
@@ -427,59 +382,13 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-Start with the end user's configuration. The package name @astrojs/zurich-cloud is fictional; the configuration follows Astro's documented adapter API. The server output setting makes pages render on demand by default.
-
-Highlight the adapter import and configuration from the start. The user selects the deployment adapter here; the adapter handles the platform-specific work.
-
-Click 1: replace the user configuration with an overview of the integration API used by adapters. These are documented hook names and arguments, with bodies omitted. Configuration hooks can change settings and register the adapter; build hooks expose Vite configuration, page information, the SSR manifest, middleware entry point, and final output. The final ellipsis indicates more hooks exist.
-
-Click 2: start our implementation with the typed factory, package name, and an empty hooks object.
-
-Click 3: animate in astro:config:done and the setAdapter call, registering the adapter's name and server entry point.
-
-Click 4: add the declaration of support for server output.
-
-Click 5: fade everything except the body of hooks, including the complete astro:config:done hook.
-
-Click 6: animate the hooks body up to the top, removing the surrounding integration boilerplate.
-
-Click 7: fade the existing hook and animate in astro:config:setup with only a placeholder updateConfig call.
-
-astro:config:setup runs while Astro is setting up the user's configuration, before it is finalized. updateConfig merges our adapter's settings into it, including build output paths and Vite options. astro:config:done runs after configuration is resolved.
-
-Click 8: fill in updateConfig while keeping the previous hook faded. This is the body of hooks; setup runs before done regardless of property order. Astro's documented build.server and build.serverEntry settings place the built runtime at .zurich/ssr.mjs; build.client keeps public output separate. Vite ssr.noExternal bundles JavaScript dependencies rather than leaving package imports for the deployment to resolve. This is a simple Node-target example; native modules and file-system assets need additional packaging in a production adapter.
-
-Click 9: client selects where Astro writes public files for the CDN.
-
-Click 10: server selects where Astro writes the server build.
-
-Click 11: serverEntry names the generated function entry file, ssr.mjs.
-
-Click 12: vite.ssr.noExternal bundles server JavaScript dependencies rather than leaving external package imports.
-
-Click 13: highlight serverEntrypoint, build.server, and build.serverEntry together. serverEntrypoint is the adapter's input module; serverEntry names the output file Astro builds it into. build.server places that file under .zurich/.
-
-Click 14: highlight only serverEntrypoint, fading the rest of the hooks.
-
-Click 15: move that exact module path from the code into the runtime's filename label, then reveal its implementation. The label deliberately matches the import specifier; the source file in the package is server.ts. With entrypointResolution auto, Astro builds this module with the application's manifest and server code. createApp and render are real Astro APIs. render returns a Response, unlike the illustrative HTML renderer earlier. Forward Astro's cookie headers as the real Netlify adapter does. The default handler and path config are the ZurichCloud function contract established earlier.
-
-The runtime initially shows only a basic ZurichCloud Function returning a placeholder Response, with its catch-all path config.
-
-Click 16: add the createApp import and initialize Astro's application outside the handler.
-
-astro/app/entrypoint is Astro's public runtime API for adapter authors. Its createApp() returns the Astro application instance that our handler calls with app.render(request) to get a standard Response. This is provided by Astro; @astrojs/zurich-cloud/server is our platform-specific wrapper around it. createApp was added in Astro 6.
-
-Reference: https://docs.astro.build/en/reference/modules/astro-app/#createapp
-
-Click 17: replace the placeholder response with app.render(request).
-
-Click 18: forward Astro's Set-Cookie headers onto the response.
-
-This is a minimal SSR path using real Astro APIs with a fictional deployment target and package name, not full production support for every Astro feature. The package exports its integration and server modules; the server source is TypeScript and its built package export resolves the server specifier. The broader redirects, image services, sessions, dev integration, and platform packaging are outside this excerpt.
-
-Sources: https://docs.astro.build/en/guides/integrations-guide/netlify/ ; https://docs.astro.build/en/reference/adapter-reference/ ; https://docs.astro.build/en/reference/integrations-reference/
-
-Implementation references: https://github.com/withastro/astro/blob/main/packages/integrations/netlify/src/index.ts ; https://github.com/withastro/astro/blob/main/packages/integrations/netlify/src/ssr-function.ts ; https://docs.astro.build/en/reference/configuration-reference/#buildserverentry ; https://vite.dev/config/ssr-options#ssr-noexternal
+- config:setup: merge settings before config is finalized.
+- config:done: resolved config; register the adapter.
+- serverEntrypoint = our input module.
+- build.server + serverEntry = output directory + filename.
+- ssr.noExternal: bundle JS dependencies.
+- astro/app/entrypoint: createApp() → app.render(Request) → Response.
+- Forward Astro’s Set-Cookie headers.
 -->
 
 ---
@@ -566,23 +475,9 @@ h1 { margin-bottom: 20px !important; }
 </style>
 
 <!--
-Remember how we didn't want users to copy-paste the deployment glue? They already told Astro what redirects and headers they want. They shouldn't have to repeat that in zurich.json. Our adapter translates it for them. Aim for 30–45 seconds; no second implementation deep dive.
-
-Initially: Astro's redirects configuration. A string destination defaults to a permanent 301 redirect for GET requests.
-
-Click 1: the adapter translates it to the ZurichCloud format introduced earlier. It can read config.redirects from astro:config:done; real adapters also inspect resolved routes to handle route patterns and generated destinations. This example deliberately uses only fixed paths.
-
-Click 2: a prerendered Astro page sets a response header during the build. The page is static; the CDN needs the header rule because no function will run when this file is requested.
-
-Click 3: add the corresponding ZurichCloud header rule. To implement this, the adapter opts into adapterFeatures.staticHeaders in setAdapter. Astro then exposes routeToHeaders to astro:build:generated, which the adapter serializes into the platform's header rules. This is documented since Astro 6; the earlier SSR-only excerpt did not enable or implement this extra capability.
-
-Click 4: more and more code we're glad users don't have to copy-paste.
-
-The JSON is the generated portion of ZurichCloud deployment configuration, merged with the user's settings; do not overwrite the user's zurich.json. The filename recalls our existing platform format. /about assumes the clean-URL mapping already established in the talk; real adapters must account for trailing-slash and output-format settings. Existing files and explicit redirect rules take precedence over the catch-all function.
-
-The adapter writes platform-specific configuration from framework information. Dynamic responses still set their own headers at runtime. Cookie handling in the previous example is unchanged.
-
-Sources: https://docs.astro.build/en/reference/configuration-reference/#redirects ; https://docs.astro.build/en/reference/adapter-reference/#staticheaders ; https://github.com/withastro/astro/blob/main/packages/integrations/netlify/src/index.ts
+- Remember the copy-paste problem? User already told Astro.
+- Static headers: opt in with adapterFeatures.staticHeaders; read routeToHeaders.
+- No function runs when a prerendered file is served.
 -->
 
 ---
@@ -623,7 +518,7 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-After the runtime and redirects/headers examples, connect the build to its output. Astro emits .zurich/ssr.mjs directly. ZurichCloud packages that entry together with its supporting chunks/assets, reads its config export, and publishes dist/client separately. The adapter also generates the deployment rules from the preceding slide. Static files and explicit redirect rules take precedence over the catch-all function.
+- Astro emits the function entry; platform packages its dependencies.
 -->
 
 ---
@@ -836,35 +731,10 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-Start with the user's documented svelte.config.js format. The @sveltejs/adapter-zurich-cloud name is fictional; the APIs are real. Other user settings such as preprocess are omitted.
-
-Click 1: selected Adapter and Builder members, abbreviated from SvelteKit's public types. Optional members such as emulate and supports, additional builder methods, and optional generateManifest routes are omitted.
-
-Click 2: the typed adapter factory with an empty adapt method. SvelteKit invokes it after its build.
-
-Click 3: write browser and prerendered files to dist/client.
-
-Click 4: choose .zurich as our adapter output directory and write SvelteKit's generated server into its server subdirectory. Fade the previous lines. Cleanup and directory setup are omitted.
-
-Click 5: generate and write the manifest beside the server directory. relativePath ./server matches that directory. writeFile is imported from node:fs/promises; its import is omitted from the excerpt.
-
-Click 6: highlight the entire adapt body, fading the surrounding factory.
-
-Click 7: move the adapt body to the top and remove the surrounding boilerplate.
-
-Click 8: copy our entrypoint.ts template directly to .zurich/functions/entrypoint.ts, where ZurichCloud discovers functions. The package ships this template as an asset; its ../server/index.js and ../manifest.mjs imports resolve after copying. fileURLToPath is imported from node:url.
-
-Click 9: collapse to the first two lines of that copy call, keeping the source reference visible.
-
-Click 10: open entrypoint.ts underneath, starting with a basic ZurichCloud Function and catch-all routing config. Accent both mentions of the filename.
-
-Click 11: add SvelteKit's Server and the manifest we just generated, then initialize the server with runtime environment variables.
-
-Click 12: replace the placeholder response with server.respond. Empty response options suffice for this basic page; real platform support also supplies getClientAddress and event.platform.
-
-This covers a minimal SSR page with actual framework and bundler APIs, not every production feature. Native dependencies, server-side file assets/read support, instrumentation, prerendered redirects, and platform-specific routing refinements require more work. No claim that this excerpt replaces the complete Netlify adapter. It has been checked against docs and adapter source, not executed as a SvelteKit deployment.
-
-Sources: https://svelte.dev/docs/kit/writing-adapters ; https://svelte.dev/docs/kit/@sveltejs-kit#Builder ; https://github.com/sveltejs/kit/blob/main/packages/adapter-netlify/index.js
+- SvelteKit calls adapt() after its build.
+- Adapter orchestrates output via Builder; Astro uses hooks.
+- Manifest connects routes to generated server code.
+- Copy our template → initialize Server → respond(request).
 -->
 
 ---
@@ -908,7 +778,8 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-The adapter's build output. ZurichCloud discovers functions in .zurich/functions and packages each entry point with its imported server code, manifest, and dependencies. The adapter does not run esbuild itself. The regular Netlify Functions path in the real SvelteKit adapter follows this division of responsibility; its explicit esbuild step is for Edge Functions. The directory names here remain our fictional platform contract. Static/prerendered files take precedence over the catch-all function.
+- Platform packages Function dependencies.
+- Explicit esbuild step in the real adapter is for Edge Functions.
 -->
 
 ---
@@ -967,21 +838,9 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-This is React Router's framework mode, descended from Remix. Its build integration is a Vite plugin.
-
-Click 1: a platform integration can be another Vite plugin. @zurich/react-router/vite is a fictional package showing that arrangement; this isn't a real plugin or a promise about universal plugin ordering. The platform integration arranges the wrapper and platform output.
-
-Click 2: this gives us a different place to do the same work. The common build engine is Vite. What information crosses that boundary matters, and we'll return to that later.
-
-Click 3: tease the later Vite interoperability section, without opening another API walkthrough here. React Router does expose presets, buildEnd, and a build manifest including server bundle information. The distinction here is Netlify's Vite-plugin-only integration, not the absence of all framework-specific APIs.
-
-Philippe's implementation context: today Netlify only supplies a React Router Vite plugin. It cannot control user-defined serverBundles (custom server bundle splitting) through that Vite surface; that information lives in React Router's configuration. Don't imply that React Router itself cannot expose it.
-
-Optional bridge for the later Vite section: custom server bundle splitting is a concrete example of why the platform needs both request entry points and routing information. If the framework exposes those through the shared Vite surface, the platform plugin can consume them without reaching into React Router's config. Keep this as a brief example if time allows; no extra slide or preset detour in the 25-minute talk.
-
-There are also templates that leave the server and platform wiring in the user's project. That makes the platform visible, with the same ownership tradeoff we just discussed. Avoid attributing a blanket anti-abstraction position to the team without a direct source.
-
-Sources: https://api.reactrouter.com/v7/variables/_react-router_dev.vite.reactRouter.html ; https://reactrouter.com/api/framework-conventions/react-router.config.ts ; https://reactrouter.com/how-to/server-bundles
+- RR does have presets/build hooks. Netlify uses only a Vite plugin.
+- Custom serverBundles live in RR config; our plugin can’t control them.
+- Callback later: entry points + routing.
 -->
 
 ---
@@ -999,19 +858,8 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-A quick visual recap, about 45–60 seconds, focused on server deployment. Static files are deliberately outside this diagram; we already established that side. These are responsibility diagrams, not precise build timelines.
-
-Compare the two familiar jobs: build the server code, then adapt it for ZurichCloud. Logos inside the boxes identify who does each job. Start with Astro building its server code through Vite and our Astro adapter using Astro's hooks to shape the build and generate platform-specific output.
-
-Click 1: SvelteKit also orchestrates Vite. In both rows the framework wraps Vite, and its platform adapter sits outside that build box. Our adapter uses SvelteKit's Builder API to prepare platform output. These framework-specific integration APIs can still configure or register Vite plugins.
-
-Click 2: the Vite frame now includes our platform plugin. React Router and Netlify's framework-specific Vite plugin participate in that shared build surface. This doesn't imply direct plugin-to-plugin calls or an absence of other React Router APIs. React Router owns its server implementation; Vite is the build integration layer.
-
-Click 3: Nuxt contains Nitro (v2), which contains its builder and our platform preset. The builder label describes its role; Nitro v2 uses Rollup internally. The nested boxes show included components; don't treat them as a precise build timeline. Nuxt still supplies its rendering logic and uses Vite elsewhere; don't imply Nitro builds Nuxt's browser app or replaces its renderer.
-
-Skip another user configuration example here. The next slide explains that Nitro distributes the preset implementations as well. Explicit nitro.preset selection and automatic platform detection can be mentioned verbally if useful.
-
-Sources: https://docs.astro.build/en/reference/adapter-reference/ ; https://svelte.dev/docs/kit/writing-adapters ; https://reactrouter.com/api/framework-conventions/react-router.config.ts ; https://v2.nitro.build/deploy ; https://github.com/nitrojs/nitro/blob/v2/src/presets/netlify/preset.ts
+- Responsibility diagrams, not build timelines.
+- Nuxt supplies rendering; Nitro supplies server tooling + deployment presets.
 -->
 
 ---
@@ -1136,23 +984,9 @@ h1 { margin-bottom: 16px !important; }
 </style>
 
 <!--
-Nitro defines the preset interface AND distributes target implementations. The selected directories are real Nitro v2 source directories; node is a runtime target, not a hosting company.
-
-Click 1: Nitro ships implementations as well as the API.
-
-Click 2: add and highlight our hypothetical zurich-cloud directory, including preset.ts and runtime/.
-
-Click 3: collapse the other directories and remove the explanatory text, keeping just our preset directory. Change the title to ZurichCloud Nitro preset.
-
-Click 4: open preset.ts below the directory excerpt, starting with defineNitroPreset and the preset's identity. Click 5: add our runtime entry. Click 6: configure the client and server output locations. Click 7: add the compiled hook, fading the previous configuration, and reveal the Level 5 badge with the logo entrances. Click 8: fade out the content below the title, move the badge and logos to the center, then level up to Level 6: Frontend cloud.
-
-This is a sketch using Nitro v2's actual defineNitroPreset API, entry, output, compiled hook, name and url fields. The ZurichCloud target and paths are fictional. url resolves the relative runtime entry; publicDir and serverDir control output locations. Nitro performs the build with these options, then calls compiled. Its body is intentionally omitted: our code would translate routing and static rules into ZurichCloud's format.
-
-runtime/entrypoint supplies the platform request wrapper around Nitro's app. This sketch doesn't include that implementation, generated function configuration, or all production packaging details. It is not a complete deployable preset. The real Netlify preset is the reference for the shape, not a claim that these invented paths match Netlify.
-
-The ability to reuse this implementation across frameworks using Nitro remains the larger point; leave that discussion for the next transition rather than adding more footer copy here.
-
-Sources: https://github.com/nitrojs/nitro/blob/v2/src/presets/_all.gen.ts ; https://github.com/nitrojs/nitro/blob/v2/src/presets/netlify/preset.ts ; https://v2.nitro.build/deploy/custom-presets
+- One preset reusable across Nitro-based frameworks.
+- entry = platform wrapper; output = build destinations.
+- compiled hook: emit platform routing/config.
 -->
 
 ---
@@ -1207,15 +1041,7 @@ h1 { margin-bottom: 8px !important; }
 </style>
 
 <!--
-About 30–45 seconds. Start with the familiar Nuxt diagram: Nuxt includes Nitro v2, and Nitro contains both its builder and our platform preset. The previous slide showed how we implement that preset.
-
-Click 1: reveal the TanStack Start diagram below, keeping the Nuxt/Nitro v2 diagram visible above for comparison. Vite is the outer box in the lower diagram; TanStack Start and Nitro v3 participate as separate plugins. Nitro contains the deployment preset, while the framework sits alongside it. The server label represents build output passing through the shared Vite build, not a direct plugin-to-plugin API.
-
-Click 2: fade out the diagrams, keeping the slide title. Bring “Users install the Nitro Vite plugin” up beneath it. The TanStack Start React configuration appears automatically after the move. Click 3: show the alternative deployment plugin sentence and a second configuration using our fictional ZurichCloud TanStack Start Vite plugin. These are alternatives, not two plugins to install together. The ZurichCloud package name is invented; the Nitro setup follows TanStack's hosting documentation, with Vite's optional defineConfig helper omitted.
-
-TanStack Start removed built-in Nitro, and SolidStart v2 made the same architectural move. Users can choose Nitro or a direct platform deployment plugin, including Netlify and Cloudflare. The point is that Nitro is optional, not that its presets have disappeared. Nuxt remains the v2 example; don't imply Nuxt removed Nitro.
-
-This is a responsibility diagram, not a precise build timeline. Nitro v3 has responsibilities beyond the preset shown here. Don't imply the preset internals are identical between Nitro majors, or that adding Nitro to any arbitrary Vite-based framework automatically works.
-
-Sources: https://github.com/TanStack/router/blob/main/docs/start/framework/react/guide/hosting.md#nitro ; https://docs.solidjs.com/solid-start/v2/guides/deployment-plugins ; https://github.com/solidjs/solid-start/discussions/2281
+- TanStack Start + SolidStart removed built-in Nitro.
+- Users choose Nitro or a direct platform plugin.
+- Nuxt still includes Nitro.
 -->

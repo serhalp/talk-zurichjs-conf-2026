@@ -46,13 +46,7 @@ clicks: 1
 </style>
 
 <!--
-The transition into adapting build output after the fact. Pause for Travolta to look between Next.js on the left and Angular on the right. Click 1: Travolta and the question disappear; reveal the fallback text and the small cat, which stay visible until the next slide.
-
-This introduces the historical problem that led to the Next.js adapter work later in the talk. Do not claim Next.js still has no deployment adapter API today. Angular and Next.js are the two examples from our platform integration experience, not an exhaustive list or a claim that they have equal complexity.
-
-With no suitable deployment adapter API, we inspect the generated files and wrap, move, or transform them into the platform's deployment format. The next slide can explain the maintenance burden of relying on implementation details.
-
-The GIF is bundled locally for offline presentation. Source: https://knowyourmeme.com/photos/1043243-confused-travolta (transparent Confused Travolta GIF).
+- Historical Next.js situation. Angular integration was much simpler.
 -->
 
 ---
@@ -238,33 +232,11 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-About 60–90 seconds. Grounded in the adjacent next-runtime checkout at 3feea0c7, package @netlify/plugin-nextjs 5.15.12. This is the existing build-output integration, not a statement about whether a new adapter API exists today. Don't spoil that later story on the slide.
-
-Start with the diagram only. It shows next build producing .next/, then our platform build plugin reading and transforming it into static assets, functions, edge functions, redirects, headers, Image CDN configuration, and blobs. The real Netlify plugin sets NEXT_PRIVATE_STANDALONE in onPreBuild; its onBuild copies assets and prerendered content, creates server and edge handlers, and configures headers and images. The diagram describes the deployment responsibilities of our fictional platform integration, not an exact list of Netlify output files: some routing and redirects are handled by the Next.js server at runtime. This is a platform build hook, not a Next.js deployment hook.
-
-Click 1: reveal "This is a whole other talk though...". Click 2: carry .next/ from the diagram into the directory listing. Click 3: highlight prerender-manifest.json. Click 4: hide the listing and open that manifest. Click 5: return to the listing. Click 6: highlight server/middleware-manifest.json. Click 7: hide the listing and open it. Click 8: reveal the Edge Functions thought bubble. Click 9: mutate its matcher on disk. Click 10: explain preventing the Next.js server from running middleware twice. Click 11: explain the standalone Node.js target. Click 12: "but ZurichCloud is a serverless platform." Click 13: the less-documented serverless mode and war-flashback dog. Click 14: explain the private contract and versioning costs.
-
-Both JSON previews are selected fields with illustrative /about values, not complete manifests or captured build output. The shapes and fields come from what the real integration consumes. Additional version, route, runtime, and file metadata is omitted.
-
-Clicks 15–18 reveal the remaining maintenance costs one at a time. The iceberg and congratulations now follow the build-plugin slide as their own slide.
-
-The first preview is prerender-manifest.json. plugin-context.ts reads it directly. content/prerendered.ts reads initialRevalidateSeconds, src/data route information, and HTML/RSC/metadata files to construct cache entries for upload. We must understand the runtime meaning, not just parse JSON. Don't teach ISR here; the 60 is background revalidation information, not a generic CDN TTL.
-
-The second preview is middleware-manifest.json. functions/edge.ts reads the middleware definitions, translates matchers into platform routing patterns, and creates middleware handlers. The sample regexp is illustrative; the field and nested structure are real.
-
-The rewrite: content/server.ts's replaceMiddlewareManifest rewrites every matcher regexp to (?!.*) in the server copy. Middleware runs separately, so this prevents running it twice while retaining other middleware-dependent Next.js behavior. We leave the rest of the manifest intact. This is an actual transformation, not invented toy logic.
-
-The "secret" mode aside refers to minimal mode in the historical integration story; keep this as a quick aside, not a detour into its implementation. Dog GIF supplied by Philippe (fetchpik.com-LBCGVvKWNR.gif), embedded locally for offline playback.
-
-Finally: these are private-ish implementation details, not a documented deployment contract with semver protection. Do not claim Next.js's public APIs ignore semver or that every emitted file is undocumented. The maintenance cost is visible in this checkout: content/prerendered.ts branches on Next.js versions for PAGE/APP_PAGE and PAGE/PAGES/APP_ROUTE cache formats; content/server.ts also applies version-bounded internal module replacements. Those examples establish version coupling, not proof that every minor/patch release breaks the adapter.
-
-Emphasize the implicit versioning: knowing a manifest's explicit version isn't necessarily enough to know how all its fields and associated runtime behavior should be interpreted. We also check the Next.js package version and accommodate changes in generated files and cache formats.
-
-Possible follow-up asset: Philippe records a short scroll through the OpenNext Netlify adapter, pausing on the version ranges, cache-format branches, manifest rewrites, and internal module patches. Use this after the readable example so the audience knows what the scrolling code represents. Embed the recording locally; don't expect the audience to read every line. No recording added yet.
-
-Source pointers in ../next-runtime: src/index.ts onPreBuild/onBuild; src/build/plugin-context.ts getPrerenderManifest/getMiddlewareManifest; src/build/content/prerendered.ts prerenderManifestRouteToRevalidateAndCacheControlProperties/copyPrerenderedContent; src/build/functions/edge.ts buildHandlerDefinition/createEdgeHandlers; src/build/content/server.ts replaceMiddlewareManifest/getPatchesToApply.
-
-Public source: https://github.com/opennextjs/opennextjs-netlify/tree/3feea0c7/src
+- Prerender manifest: field semantics, not just JSON.
+- Revalidation interval ≠ CDN TTL.
+- Middleware matcher → never match: prevent double execution.
+- Minimal mode: the private serverless path.
+- Manifest version alone isn’t enough; branch on Next.js versions too.
 -->
 
 ---
@@ -317,17 +289,8 @@ h1 { margin-bottom: 18px !important; }
 </style>
 
 <!--
-About 30–45 seconds. Keep this about the platform integration mechanism, not a Netlify product tutorial.
-
-Start with the thought bubble. We have written all this code to interpret and transform Next.js output, but something still has to invoke it on every build.
-
-Click 1: ZurichCloud owns the build pipeline. Run the user's build command, run our integration after that command succeeds, then deploy the prepared output. These hooks belong to the platform's build system. They are not Next.js deployment hooks or Vite plugin hooks.
-
-Click 2: package the transformation work from the previous slide as a build plugin. The onBuild export is grounded in the existing Netlify integration at ../next-runtime/src/index.ts: that hook runs after the framework build and prepares static assets, prerendered content, server and edge handlers, headers, and image configuration. @zurich/nextjs and transformNextOutput are fictional names compressing the work we just explored; this is a sketch of the lifecycle, not an executable Netlify plugin. Real implementations also have hooks before the build, for example to select standalone output and restore caches. Skip those details here.
-
-Click 3: remember zero config? Detect Next.js and select/install/run our integration automatically, so users don't have to wire this up themselves. Framework detection is separate from invoking the hook. It chooses which plugin to run; the build pipeline decides when to run it. This makes the experience automatic for users while leaving the integration maintenance with our frameworks team.
-
-The diagram omits install, caching, packaging, and other lifecycle steps. Its purpose is the placement of the post-build integration between the framework build and deployment.
+- Platform build hooks, not framework hooks.
+- Detection selects the plugin; hooks run it.
 -->
 
 ---
@@ -356,10 +319,5 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-We've shown some of the output transformations and how the platform runs them after every build. We've only just begun to scratch the surface.
-
-Click 1: Congratulations, you've doubled the size of your frameworks team.
-Click 2: reveal the Level 6 badge above the congratulations. One second after its entry animation finishes, level up to 7: Frontend cloud, hard mode. Keep the iceberg and congratulations visible.
-
-This closes the maintenance story before the OpenNext collaboration: we weren't the only ones doing this.
+- We weren’t the only ones doing this.
 -->

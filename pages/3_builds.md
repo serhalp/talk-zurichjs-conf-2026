@@ -56,13 +56,8 @@ h2 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-[Finish section 1 within about 3 minutes total. The level reveals should move quickly.]
-
-Users don't want to hand-code every page or copy the same navigation into fifty HTML files. They want to write Markdown, reuse templates, or build with components. These tools let them do that, but the source in their repo isn't the website we can serve yet.
-
-Click 1 introduces SSG and reveals its logos in sequence. Click 2 introduces bundling and reveals its logos in sequence. These are examples of capabilities, not exclusive categories: Gatsby does more than SSG, and Vite is a broader build tool.
-
-Click 3: the app may use React or Vue. ZurichCloud does not need a framework-specific integration to serve the static build output.
+- SSG ≠ just Markdown. Bundling ≠ just components.
+- Static output: no framework-specific serving logic.
 -->
 
 ---
@@ -130,17 +125,7 @@ h2 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-The user tells us how to build their site. Click 1 shows name and publish_dir. Click 2 inserts build_command above publish_dir as the command appears in the diagram. The command is cyan; the output directory is amber throughout.
-
-Click 2: ZurichCloud runs hugo build. Click 3: dist/ and its generated files animate into their alphabetical position above hugo.toml, package.json, and src/. Hugo writes the generated site into dist/. The user can push their source instead of building and uploading it themselves. We use dist/ as the illustrative output directory for this talk; assume Hugo is configured to write there.
-
-Click 4: ZurichCloud serves those generated files at the same site URL. The URL maps to dist/about.html, a generated page in this illustrative project. We still end up uploading files to the CDN; we don't need a framework-specific serving integration.
-
-The redirects, rewrites, and headers from the previous slides still work; they're omitted here to focus on the build settings.
-
-Click 5: this is roughly the original Netlify idea. Its March 31, 2015 launch was titled “Builds, Deploys and Hosts Your Static Site or App.” This is a conceptual milestone, not an exhaustive recreation of that product.
-
-Sources: https://news.ycombinator.com/item?id=9297316 and https://gohugo.io/getting-started/usage/
+- Assume Hugo is configured to output to dist/.
 -->
 
 ---
@@ -204,17 +189,6 @@ h2 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-[Keep this brief: one more capability before server rendering.]
-
-The user doesn't want to manually configure things we can infer. Instead of listing every category of tool, show three concrete clues and what each helps us decide.
-
-Click 1: pnpm-lock.yaml suggests pnpm. We need to install the user's dependencies before building, so this also gives us an install command. Exact CI flags, package-manager version selection, and conflicting lockfiles are outside this sketch.
-
-Click 2: turbo.json suggests Turborepo. In this illustrative pnpm workspace with a configured build task, pnpm exec turbo build runs that task. The filename alone does not prove that task exists or select which workspace to deploy; a real implementation inspects the configuration and workspace layout too.
-
-Click 3: the actual devDependencies object in package.json contains Vite and its version range. This suggests a default dist output directory. It is an excerpt, not the whole package.json. The range is illustrative; detection can use resolved versions when available and must account for user overrides such as build.outDir.
-
-Click 4: the milestone refers to basic automatic framework defaults, not the dates when these specific modern tools were supported. Netlify was demonstrably prefilling Gatsby settings by February 2019; ZEIT Now announced Zero Config Deployments in August 2019. This is not a claim about who invented detection first. Sources: https://dev.to/imshuffling_31/deploying-your-gatsbyjs-site-to-netlify-4la and https://vercel.com/blog/zero-config
-
-Combine these clues to infer defaults; let explicit user settings win. This is build configuration detection, separate from adapting a framework's server output later. Other frameworks, bundlers, package managers, monorepo tools, and task runners provide other clues.
+- Install → build → output directory.
+- Infer defaults; explicit user settings win.
 -->

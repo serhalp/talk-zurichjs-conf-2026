@@ -17,8 +17,7 @@ dist/server/
 <p v-click="2" class="future-aside">Remember <code>./dist/server/entry.mjs</code>?<br />We knew where it was because we knew the framework.</p>
 
 <!--
-The listing is illustrative, not the output of a particular framework. A bundler entry is a build concept. It might be a request handler, a worker, or another kind of module. Inferring the HTTP entry from the top-level bundle works only with assumptions about the framework and configuration.
-This is the distinction behind https://github.com/vitejs/vite/discussions/22507
+- Bundle entry ≠ request entry point.
 -->
 
 ---
@@ -68,9 +67,8 @@ handle(nodeRequest, nodeResponse);
 </style>
 
 <!--
-These are illustrative contracts, not attributed framework APIs. Finding the module does not tell us its export shape: named function, default function, or an object with a method. We also need inputs, outputs, and invocation: Web Request versus Node request, returning HTML or a Response versus mutating an outgoing response, and additional context.
-Discovery and signature belong together. The proposed entry point API distinguishes fetchable from custom; custom is deliberately opaque to a generic consumer.
-Source: https://github.com/vitejs/vite/discussions/22507
+- Which export? Which method? Arguments? Return value?
+- Web vs Node; Response vs HTML; extra context.
 -->
 
 ---
@@ -129,10 +127,9 @@ export default { fetch };
 </style>
 
 <!--
-I made fetchable.org to document and give a name to an existing convention, not to invent a new runtime or claim to have originated this shape. Cloudflare helped popularize it; many runtimes, frameworks, and libraries use it.
-The method can return Response synchronously or Promise<Response>; this example chooses async. Extra arguments and properties are allowed. Sharing the invocation shape does not make every runtime API portable.
-Source: https://fetchable.org/
-The logo cloud selects entries from the site's interoperability list (checked September 7, 2026). Philippe confirmed SolidStart support is complete; the site's coming-soon label is outdated. Logos downloaded from Iconify: logos (Bun, Hono, Cloudflare Workers, Solid), simple-icons (Deno, Netlify, Vercel), unjs (H3, Nitro), thesvg-color (Elysia, TanStack).
+- Named an existing convention; Cloudflare helped popularize it.
+- Response or Promise<Response>; extra arguments allowed.
+- Common shape ≠ portable runtime APIs.
 -->
 
 ---
@@ -185,11 +182,8 @@ environments: {
 </CodeTokenAccent>
 
 <!--
-Real proposed API, abridged framework configuration. The requestEntrypoints key matches the named bundler input. It is not a second source path or a route. consumer: 'server' and other framework configuration are omitted here.
-Fetchable is the default type; custom is available for contracts a generic platform cannot interpret. Multiple request entries per environment are allowed.
-RFC: https://github.com/vitejs/vite/discussions/22507
-Implementation PR, still open when checked September 7, 2026: https://github.com/vitejs/vite/pull/22680
-This is not a released Vite API. The slide follows the RFC spelling, including rollupOptions.
+- Key matches the named build input, not a path or route.
+- Fetchable by default; custom is opaque to generic plugins.
 -->
 
 ---
@@ -273,10 +267,8 @@ export default async (req) => {
 </style>
 
 <!--
-The platform plugin's generateBundle hook and loop remain visible throughout. Click 1 reveals the arrow and separate function template. Click 2 substitutes the illustrative returned filename app.mjs into its import. The literal ${entry.fileName} is a visual template placeholder, not runtime string interpolation inside an import statement.
-This is an excerpt from the proposed consumer API, not a complete deployment plugin. The generated function runs at request time, not during generateBundle. Assume a fetchable entry and a wrapper beside the corresponding entry chunk. Writing the source and provisioning output are omitted; a real plugin also filters applicable environments and supported entry types.
-getRequestEntrypointOutputs maps the declaration to actual output chunks, avoiding assumed output filenames. Discovery alone does not supply routes or automatically dispatch requests in dev.
-Source: https://github.com/vitejs/vite/discussions/22507 and https://github.com/vitejs/vite/pull/22680
+- Generate at build time; invoke at request time.
+- Actual output filename, no guessing. Routing still missing.
 -->
 
 ---
@@ -294,9 +286,9 @@ clicks: 3
 <p v-click="3" class="future-takeaway">So the platform can't know.</p>
 
 <!--
-The split is illustrative: /about to SSR, /api/cart to an API handler. Not every framework or platform needs multiple bundles.
-This is where React Router's user-defined serverBundles come back into the story. Our earlier Netlify plugin example cannot control those by inspecting Vite alone today. Shared entry and routing declarations could remove that framework-specific knowledge requirement; they do not solve it until frameworks publish the information.
-Routing remains a design discussion: https://github.com/vitejs/vite/discussions/21212 and https://github.com/vitejs/ecosystem/issues/12
+- Only matters when splitting handlers.
+- RR serverBundles: callback to the earlier limitation.
+- Need routing as build-time configuration, not just a router function.
 -->
 
 ---
@@ -333,12 +325,7 @@ clicks: 5
 </style>
 
 <!--
-Start with the two architecture boxes, focused on Vite. Click 1 focuses framework adapters. Click 2 shows a code minimap with annotations, not a runnable example. Click 3 highlights the large portion of work that could be delegated. Click 4 moves that portion into the shared platform plugin and shrinks the adapter around the remaining framework-specific work and a small registration step.
-The minimap is schematic: responsibilities regrouped from the real SvelteKit Netlify adapter, not a screenshot or measured line-count split. Roughly 70% moving is Philippe's estimate of the opportunity, not a demonstrated deletion from this repository. Code-like bars are intentionally unreadable; the annotations carry the information.
-Click 5 adds the ZurichCloud Astro adapter below SvelteKit, retaining its own framework work and delegating to the same Vite plugin. Keep the plugin stationary so the reuse is visible. The Astro minimap is also schematic, not a measured implementation comparison.
-Source mapping: adapt/get_publish_directory/get_netlify_config handle configuration and output placement; generate_edge_functions configures bundling and emits an edge manifest; generate_lambda_functions/generate_serverless_function generate Functions; generate_config_export writes platform route configuration; adapt writes platform headers. SvelteKit's builder.generateManifest, routes/segments, prerender metadata and runtime integration still require framework knowledge.
-Keep policy distinct from serialization: deciding SvelteKit cache behavior or matching its __data.json routes is framework-specific. Serializing that intent into platform headers/routing and packaging a declared entry can be shared. Shared contracts must carry the necessary information; this is proposed delegation, not existing complete generic support.
-This minimap covers multiple responsibilities/files conceptually. Moving implementation out of the adapter does not eliminate the work: the platform Vite plugin owns it once. Platform configuration and headers may need contracts beyond the request-entry/routing proposals, which leads into gap 4.
-The adjacent framework-adapters checkout's packages/vite-plugin/src/lib/build.ts already illustrates generic Function wrapper generation, with explicit assumptions about a single Fetchable entry. It does not yet implement every responsibility pictured here. The regular SvelteKit Netlify Functions path lets the platform package dependencies; its explicit esbuild setup is for Edge Functions. Do not describe both as an identical bundling step.
-Sources inspected September 7, 2026: https://github.com/sveltejs/kit/blob/main/packages/adapter-netlify/index.js ; https://github.com/vitejs/vite/discussions/20907
+- ~70% is my estimate, not a measured deletion.
+- Keep framework semantics; delegate packaging + serialization.
+- Work moves into one plugin, doesn’t disappear.
 -->
