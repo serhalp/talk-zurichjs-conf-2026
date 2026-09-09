@@ -134,21 +134,169 @@ clicks: 7
 ---
 level: 2
 class: authored future-section feature-choice-slide
-clicks: 4
+clicks: 5
 ---
 
-# <span class="gap-number">4</span> Leave it to the user?
+# <span class="gap-number">4</span> #wontfix
 
 <FrameworkFeatureChoice :step="$clicks" />
 
-<p v-click="4" class="coordination-reason">The platform identifies the deployment.<br />The framework tags requests with that identifier.</p>
-
 <style>
 .feature-choice-slide h1 { margin-bottom: 22px; }
-.coordination-reason { margin: 18px 0 0; font-size: 26px; line-height: 1.45; }
 </style>
 
 <!--
-- Deliberate framework scope choice.
-- Skew strategy: platform supplies deployment ID; framework tags requests.
+- Vite-only integration: also choosing the framework’s configuration boundary.
+- A possible design choice, not a claim about the teams’ intentions.
+- Skew: platform supplies deployment ID; framework tags requests.
+-->
+
+---
+level: 2
+class: authored future-section metadata-teaser
+clicks: 2
+---
+
+# <span class="gap-number">4</span> Exploring deployment metadata
+
+<p class="teaser-premise">A way for frameworks and platforms to coordinate.</p>
+
+<div class="teaser-exchange">
+  <div>Framework<span>What I need</span></div>
+  <span class="exchange-arrow">↔</span>
+  <div class="metadata-record">Deployment metadata</div>
+  <span class="exchange-arrow">↔</span>
+  <div>Platform<span>What I support</span></div>
+</div>
+
+<div v-click="1" class="teaser-collaboration">
+  <p>Designing this together:</p>
+  <div class="teaser-teams">
+    <span><img src="/netlify.svg" alt="" />Netlify</span>
+    <span><img src="/cloudflare.svg" alt="" />Cloudflare</span>
+    <span><img src="/tanstack.svg" alt="" />TanStack</span>
+    <span><img src="/vite.svg" alt="" />Vite core</span>
+  </div>
+</div>
+
+<div v-click="2" class="teaser-credit"><img src="/vike.svg" alt="Vike" /><span>With help and prototyping from the Vike team,<br />behind Photon and Universal Deploy.</span></div>
+
+<a class="teaser-link" href="https://github.com/vitejs/deployment-metadata">vitejs/deployment-metadata ↗</a>
+
+<style>
+.metadata-teaser .teaser-premise { margin: 24px 0; font-size: 28px; }
+.teaser-exchange { display: grid; grid-template-columns: 1fr 32px 1.25fr 32px 1fr; gap: 12px; align-items: center; margin: 26px 0; }
+.teaser-exchange > div { border: 1px solid #64748b; border-radius: 8px; padding: 16px 10px; text-align: center; font-size: 25px; }
+.teaser-exchange > div > span { display: block; margin-top: 6px; color: #cbd5e1; font-size: 22px; }
+.teaser-exchange .metadata-record { border-color: #67e8f9; color: #a5f3fc; background: #142c34; }
+.exchange-arrow { color: #94a3b8; font-size: 30px; text-align: center; }
+.metadata-teaser .teaser-collaboration p { margin: 0 0 12px; font-size: 24px; }
+.teaser-teams { display: flex; align-items: center; justify-content: space-between; font-size: 25px; }
+.teaser-teams span { display: flex; gap: 10px; align-items: center; }
+.teaser-teams img { width: 32px; height: 32px; object-fit: contain; }
+.metadata-teaser .teaser-credit { display: flex; align-items: center; gap: 16px; margin-top: 24px; font-size: 24px; line-height: 1.45; }
+.teaser-credit img { width: 44px; height: 44px; object-fit: contain; }
+.teaser-link { position: absolute; bottom: 24px; right: 56px; font-size: 20px; color: #94a3b8; }
+</style>
+
+<!--
+- Still exploring; not a finished standard.
+- Vike team: Photon, Universal Deploy, prototyping and help.
+- More depth in the ViteConf talk next month?
+-->
+
+---
+level: 2
+class: authored future-section working-slide
+clicks: 4
+---
+
+# This already works.
+
+<div class="netlify-working" :class="{ 'with-solid': $clicks >= 1, 'with-rr': $clicks >= 3 }">
+  <div class="working-platform"><img src="/netlify.svg" alt="" /><span>Netlify Vite plugin</span></div>
+  <svg class="working-branches" viewBox="0 0 54 130" aria-hidden="true">
+    <path :d="$clicks >= 3 ? 'M1 65H12Q20 65 20 57V26Q20 18 28 18H51m-6-5 6 5-6 5' : $clicks >= 1 ? 'M1 65H12Q20 65 20 57V42Q20 34 28 34H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 65V65Q20 65 28 65H51m-6-5 6 5-6 5'" />
+    <path v-click="1" :d="$clicks >= 3 ? 'M1 65H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 73V82Q20 90 28 90H51m-6-5 6 5-6 5'" />
+    <path v-click="3" class="rr-branch" d="M1 65H12Q20 65 20 73V104Q20 112 28 112H51m-6-5 6 5-6 5" />
+  </svg>
+  <span class="working-framework tanstack-working"><img src="/fetchable/tanstack.svg" alt="" />TanStack Start</span>
+  <span class="working-site-count">Powers 100k+ sites.</span>
+  <span v-click="1" class="working-framework solid-working"><img src="/fetchable/solid.svg" alt="" />SolidStart 2</span>
+  <span v-click="3" class="working-framework rr-working"><img src="/reactrouter.svg" alt="" class="working-mono" />React Router <b>?</b></span>
+</div>
+
+<div class="working-proof">
+  <p v-click="1" class="worked-first-try" :class="{ 'detail-hidden': $clicks >= 3 }">SolidStart 2 shipped last month. It just worked. No code changes.</p>
+  <p class="worked-first-try rr-question" :class="{ 'detail-hidden': $clicks < 3 }">React Router should be doable next, but…</p>
+</div>
+
+<div v-click="2" class="working-assumptions" :class="{ 'rr-assumptions': $clicks >= 3 }">
+  <strong :class="{ 'detail-hidden': $clicks >= 3 }">But we're relying on assumptions that hold for now:</strong>
+  <div>
+    <span><i :class="{ failed: $clicks >= 3 }">{{ $clicks >= 3 ? '✕' : '✓' }}</i>Fetchable module<small v-show="$clicks >= 3">Needs a wrapper</small></span>
+    <span><i :class="{ caveat: $clicks >= 3 }">{{ $clicks >= 3 ? '△' : '✓' }}</i>One server entry point<small v-show="$clicks >= 3">Unless the user splits server bundles</small></span>
+    <span><i :class="{ caveat: $clicks >= 3 }">{{ $clicks >= 3 ? '△' : '✓' }}</i>Catch-all routing<small v-show="$clicks >= 3">Custom splitting needs routing information</small></span>
+    <span><i>✓</i>No extra coordination</span>
+  </div>
+</div>
+
+<div v-click="4" class="cloudflare-working">
+  <div class="working-platform"><img src="/cloudflare.svg" alt="" /><span>Cloudflare Vite plugin</span></div>
+  <svg class="working-branches" viewBox="0 0 54 90" aria-hidden="true">
+    <path d="M1 45H12Q20 45 20 37V30Q20 22 28 22H51m-6-5 6 5-6 5" />
+    <path d="M1 45H12Q20 45 20 53V60Q20 68 28 68H51m-6-5 6 5-6 5" />
+  </svg>
+  <span class="working-framework cf-react-router"><img src="/reactrouter.svg" alt="" class="working-mono" />React Router</span>
+  <span class="working-framework cf-tanstack"><img src="/fetchable/tanstack.svg" alt="" />TanStack Start</span>
+</div>
+
+<style>
+.working-slide h1 { margin-bottom: 20px; }
+.working-platform { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #64748b; border-radius: 10px; font-size: 23px; white-space: nowrap; }
+.working-platform img { width: 34px; height: 34px; object-fit: contain; }
+.working-mono { filter: brightness(0) invert(1); }
+.netlify-working { position: relative; height: 130px; margin-top: 8px; }
+.netlify-working .working-platform { position: absolute; left: 0; top: 31px; width: 330px; }
+.working-branches { position: absolute; left: 342px; top: 0; width: 54px; height: 130px; fill: none; stroke: #94a3b8; stroke-width: 1.5; }
+.working-branches path { transition: d 650ms ease; }
+.working-branches .rr-branch { stroke: #fcd34d; }
+.working-framework { position: absolute; left: 408px; display: flex; align-items: center; gap: 10px; font-size: 23px; white-space: nowrap; transition: top 650ms ease; }
+.working-framework img { width: 32px; height: 32px; object-fit: contain; }
+.tanstack-working { top: 49px; }
+.with-solid .tanstack-working { top: 18px; }
+.solid-working { top: 74px; }
+.with-rr .tanstack-working { top: 2px; }
+.with-rr .solid-working { top: 49px; }
+.rr-working { top: 96px; color: #fcd34d; }
+.rr-working b { font-weight: 400; }
+.working-site-count { position: absolute; left: 650px; top: 49px; font-size: 23px; color: #bef264; white-space: nowrap; transition: top 650ms ease; }
+.with-solid .working-site-count { top: 18px; }
+.with-rr .working-site-count { top: 2px; }
+.working-proof { display: grid; }
+.worked-first-try { grid-area: 1 / 1; margin: 8px 0; color: #bef264; font-size: 25px; line-height: 1.35; transition: opacity 400ms, visibility 400ms; }
+.rr-question { color: #fcd34d; }
+.detail-hidden { opacity: 0 !important; visibility: hidden !important; }
+.working-assumptions { margin: 4px 0 0; font-size: 22px; }
+.working-assumptions strong { display: block; max-height: 40px; font-weight: 400; color: #cbd5e1; transition: opacity 400ms, max-height 600ms; }
+.rr-assumptions strong { max-height: 0; overflow: hidden; }
+.working-assumptions > div { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; margin-top: 8px; line-height: 1.4; }
+.working-assumptions > div > span { position: relative; min-height: 50px; padding-left: 28px; }
+.working-assumptions i { position: absolute; left: 0; font-style: normal; color: #86b99a; font-size: 20px; }
+.working-assumptions i.failed { color: #fda4af; }
+.working-assumptions i.caveat { color: #fcd34d; }
+.working-assumptions small { display: block; color: #cbd5e1; font-size: 18px; line-height: 1.25; }
+@media (prefers-reduced-motion: reduce) { .netlify-working * { transition: none !important; } }
+.cloudflare-working { position: relative; height: 90px; margin-top: 28px; }
+.cloudflare-working .working-platform { position: absolute; left: 0; top: 11px; width: 330px; }
+.cloudflare-working .working-branches { height: 90px; }
+.cf-react-router { top: 6px; }
+.cf-tanstack { top: 52px; }
+</style>
+
+<!--
+- Assumptions: one Fetchable entry, all server requests routed there.
+- SolidStart 2: tried it; zero framework-specific changes.
+- React Router: plausible next; not Fetchable. Niche serverBundles option needs routing information.
+- Cloudflare: React Router + TanStack Start, different mechanics.
 -->

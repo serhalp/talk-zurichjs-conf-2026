@@ -46,3 +46,7 @@ src: ./pages/9_request-contracts.md
 ---
 src: ./pages/10_deployment-metadata.md
 ---
+
+---
+src: ./pages/11_closing.md
+---

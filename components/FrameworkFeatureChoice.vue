@@ -9,113 +9,202 @@ const features = [
 </script>
 
 <template>
-  <svg
-    viewBox="0 0 868 278"
-    role="img"
-    aria-label="Image CDN configuration, redirects and rewrites, and static response headers can be left to users to configure on their platform. Skew protection still needs framework and platform coordination."
-  >
-    <g class="platform-area" :class="{ shown: step >= 1, dimmed: step >= 4 }">
-      <rect
-        x="420"
-        y="0"
-        width="448"
-        height="220"
-        rx="12"
-        class="platform-box"
-      />
-      <text x="442" y="34" class="heading">Configure on the platform</text>
-    </g>
-    <g
-      v-for="(feature, index) in features"
-      :key="feature"
-      class="feature"
-      :class="{ moved: step > index, dimmed: step >= 4 }"
-      :style="{
-        transform: `translate(${step > index ? 438 : 0}px, ${60 + index * 54}px)`,
-      }"
-    >
-      <rect width="410" height="44" rx="7" />
-      <text x="16" y="30">{{ feature }}</text>
-    </g>
-    <g
-      class="skew-feature"
-      :class="{ highlighted: step >= 4 }"
-      transform="translate(0 228)"
-    >
-      <rect width="410" height="44" rx="7" />
-      <text x="16" y="30">Skew protection</text>
-      <text
-        x="438"
-        y="30"
-        class="coordination-label"
-        :class="{ shown: step >= 4 }"
+  <div class="feature-choice" :class="{ coordinating: step >= 5 }">
+    <p class="premise">
+      By choosing a Vite-only architecture, framework authors draw a line around
+      conveniences they can offer.
+    </p>
+
+    <div class="configuration-map">
+      <div class="column-heading feature-heading">
+        The user wants to configure…
+      </div>
+      <div class="column-heading">
+        <div class="logos">
+          <img src="/tanstack.svg" alt="TanStack Start" />
+          <img src="/solid.svg" alt="SolidStart" />
+        </div>
+        Framework
+      </div>
+      <div class="column-heading platform-heading">
+        <div class="logos">
+          <img src="/zurich-cloud-symbol.svg" alt="ZurichCloud" />
+          <img src="/vite.svg" alt="Vite" />
+        </div>
+        Platform / plugin
+      </div>
+
+      <template v-for="(feature, index) in features" :key="feature">
+        <div class="feature-name reveal" :class="{ shown: step >= index + 1 }">
+          {{ feature }}
+        </div>
+        <div class="outside reveal" :class="{ shown: step >= index + 1 }">
+          <span class="minus" aria-hidden="true">−</span> Out of scope
+        </div>
+        <div class="available reveal" :class="{ shown: step >= index + 1 }">
+          <span class="check" aria-hidden="true">✓</span> Configure it here
+        </div>
+      </template>
+    </div>
+
+    <div class="takeaway reveal" :class="{ shown: step >= 4 }">
+      No framework convenience. The user configures the platform directly.
+    </div>
+
+    <div class="skew reveal" :class="{ shown: step >= 5 }">
+      <strong>But skew protection?</strong>
+      <div class="coordination">
+        <span>Framework</span>
+        <span class="bridge" aria-hidden="true">⟷</span>
+        <span>Platform</span>
+      </div>
+      <span class="both"
+        >The user can’t configure away the need for coordination.</span
       >
-        This needs coordination.
-      </text>
-    </g>
-  </svg>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-svg {
-  display: block;
-  width: 100%;
-  overflow: visible;
+.feature-choice {
+  height: 386px;
+  position: relative;
+  color: #f1f5f9;
 }
-text {
-  font-family: inherit;
+.feature-choice .premise {
+  margin: 0 0 14px;
   font-size: 25px;
-  fill: #f8fafc;
+  line-height: 1.3;
 }
-rect {
-  fill: #17202e;
-  stroke: #64748b;
-  stroke-width: 1.3;
-  transition:
-    fill 400ms,
-    stroke 400ms;
+.configuration-map {
+  display: grid;
+  grid-template-columns: 1.32fr 0.9fr 1.08fr;
+  gap: 6px 20px;
+  align-items: stretch;
 }
-.platform-box {
-  fill: #131a23;
-  stroke-dasharray: 5 5;
+.column-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 22px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #64748b;
+  white-space: nowrap;
 }
-.heading {
-  fill: #cbd5e1;
+.feature-heading {
+  color: #cbd5e1;
+  font-size: 20px;
 }
-.platform-area {
+.logos {
+  display: flex;
+  gap: 5px;
+}
+.logos img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+.feature-name,
+.outside,
+.available {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 23px;
+}
+.outside,
+.available {
+  gap: 10px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+}
+.outside {
+  color: #a6b2c3;
+  border-style: dashed;
+}
+.available {
+  color: #e2f8ec;
+  background: #163128;
+  border-color: #5c9b7a;
+}
+.minus {
+  color: #94a3b8;
+}
+.check {
+  color: #86efac;
+}
+.takeaway {
+  margin-top: 24px;
+  font-size: 25px;
+  line-height: 1.4;
+}
+.reveal {
   opacity: 0;
-  transition: opacity 400ms;
-}
-.platform-area.shown {
-  opacity: 1;
-}
-.feature {
+  visibility: hidden;
+  transform: translateY(7px);
   transition:
-    transform 750ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 400ms;
+    opacity 500ms,
+    transform 500ms,
+    visibility 500ms;
 }
-.feature.moved rect {
-  stroke: #94a3b8;
-}
-.dimmed,
-.platform-area.dimmed {
-  opacity: 0.25;
-}
-.skew-feature.highlighted rect {
-  fill: #153039;
-  stroke: #67e8f9;
-}
-.coordination-label {
-  opacity: 0;
-  fill: #67e8f9;
-  transition: opacity 400ms;
-}
-.coordination-label.shown {
+.reveal.shown {
   opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.configuration-map,
+.premise,
+.takeaway {
+  transition: opacity 500ms;
+}
+.coordinating .configuration-map,
+.coordinating .premise {
+  opacity: 0.2;
+}
+.coordinating .takeaway {
+  opacity: 0;
+  visibility: hidden;
+}
+.skew {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 30px;
+  row-gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid #67e8f9;
+  border-radius: 8px;
+  background: #142c34;
+  font-size: 25px;
+}
+.skew strong {
+  font-weight: 500;
+  color: #a5f3fc;
+}
+.coordination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+}
+.bridge {
+  color: #67e8f9;
+  font-size: 36px;
+  line-height: 1;
+}
+.both {
+  grid-column: 1 / -1;
+  font-size: 24px;
 }
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+    transform: none !important;
   }
 }
 </style>
