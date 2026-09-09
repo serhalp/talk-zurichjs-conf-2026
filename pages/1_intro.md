@@ -24,7 +24,6 @@ clicks: 1
 <div class="cover-footer">
   <div class="speaker-card">
     <div class="speaker-name">Philippe Serhal</div>
-    <div class="speaker-role">Staff Engineer @ Netlify</div>
     <div class="speaker-socials">
       <span class="shared-social-handle"><a href="https://bsky.app/profile/philippeserhal.com"><img src="/bluesky.svg" alt="Bluesky"></a><a href="https://tangled.org/philippeserhal.com"><img src="/tangled.svg" alt="Tangled">@philippeserhal.com</a></span>
       <img src="/discord.svg" alt="Discord" />
@@ -32,9 +31,10 @@ clicks: 1
     </div>
   </div>
   <div class="speaker-affiliations">
-    <div><img src="/npmx.svg" alt=""><span><strong>npmx</strong> core team</span></div>
+    <div><img src="/netlify.svg" alt=""><span><strong>Netlify</strong> staff engineer</span></div>
     <div><img src="/vite.svg" alt=""><span><strong>Vite</strong> team advisor</span></div>
     <div><img class="monochrome-logo" src="/nextjs.svg" alt=""><span><strong>Next.js</strong> Ecosystem Working Group member</span></div>
+    <div><img src="/npmx.svg" alt=""><span><strong>npmx</strong> core team</span></div>
   </div>
 </div>
 

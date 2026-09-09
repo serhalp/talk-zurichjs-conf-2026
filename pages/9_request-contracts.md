@@ -14,7 +14,7 @@ dist/server/
 ```
 
 <p v-click="1" class="big-line">A bundle entry isn't necessarily a request entry point.</p>
-<p v-click="2" class="future-aside">Remember <code>./dist/server/entry.mjs</code>?<br />We knew where it was because we knew the framework.</p>
+<p v-click="2" class="future-aside">Remember <code>../../dist/server/entry.mjs</code>?<br />We knew where it was because we knew the framework.</p>
 
 <!--
 - Bundle entry ≠ request entry point.

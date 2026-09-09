@@ -35,7 +35,7 @@ clicks: 2
   </div>
 </div>
 
-<p v-click="2" class="closing-responsibility">Making that combination work should be our shared problem.</p>
+<p v-click="2" class="closing-responsibility">Let's make it easy and boring for them.<br />And sustainable for us.</p>
 
 <style>
 .closing-user .closing-request { display: flex; align-items: center; gap: 30px; margin: 30px 0; }
@@ -81,8 +81,8 @@ class: authored closing-coop
 
 <div class="closing-contact">
   <strong>Philippe Serhal</strong>
-  <a href="https://bsky.app/profile/philippeserhal.com"><img src="/bluesky.svg" alt="Bluesky" />@philippeserhal.com</a>
-  <a href="https://github.com/serhalp"><img src="/github.svg" alt="GitHub" />@serhalp</a>
+  <span class="closing-social-pair"><a href="https://bsky.app/profile/philippeserhal.com"><img src="/bluesky.svg" alt="Bluesky" /></a><a href="https://tangled.org/philippeserhal.com"><img src="/tangled.svg" alt="Tangled" />@philippeserhal.com</a></span>
+  <span class="closing-social-pair"><img src="/discord.svg" alt="Discord" /><a href="https://github.com/serhalp"><img src="/github.svg" alt="GitHub" />@serhalp</a></span>
 </div>
 
 <style>
@@ -99,7 +99,8 @@ class: authored closing-coop
 .closing-resources span { display: block; margin-top: 5px; font-size: 20px; color: #cbd5e1; }
 .closing-contact { position: absolute; bottom: 35px; left: 56px; right: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid #475569; font-size: 23px; }
 .closing-contact strong { font-size: 26px; font-weight: 400; }
-.closing-contact a { display: flex; align-items: center; gap: 8px; }
+.closing-contact a { display: flex; align-items: center; gap: 8px; border-bottom: none !important; text-decoration: none !important; }
+.closing-social-pair { display: flex; align-items: center; gap: 8px; }
 .closing-contact img { width: 23px; height: 23px; object-fit: contain; filter: brightness(0) invert(1); }
 </style>
 

@@ -215,12 +215,15 @@
 }
 
 .speaker-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 0;
 }
 
 .speaker-name {
   color: #f7fee7;
-  font-size: 28px;
+  font-size: 36px;
   line-height: 1.25;
 }
 

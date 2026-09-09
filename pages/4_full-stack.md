@@ -66,7 +66,7 @@ class: authored
 <LevelBadge :number="5">Full stack</LevelBadge>
 
 <!-- prettier-ignore -->
-```ts [.zurich/hello.ts]
+```ts [.zurich/functions/hello.ts]
 export default async (request: Request) =>
   new Response("Hello world!");
 
@@ -113,12 +113,12 @@ class: authored
 <LevelBadge :number="5">Full stack</LevelBadge>
 
 ````md magic-move {at:1} {duration:700}
-```ts [.zurich/ssr.ts]
-import { render } from "./dist/server/entry.mjs";
+```ts [.zurich/functions/ssr.ts]
+import { render } from "../../dist/server/entry.mjs";
 ```
 
-```ts [.zurich/ssr.ts]
-import { render } from "./dist/server/entry.mjs";
+```ts [.zurich/functions/ssr.ts]
+import { render } from "../../dist/server/entry.mjs";
 
 export default async (request: Request) => {
   const html = "...";
@@ -128,8 +128,8 @@ export default async (request: Request) => {
 };
 ```
 
-```ts [.zurich/ssr.ts]
-import { render } from "./dist/server/entry.mjs";
+```ts [.zurich/functions/ssr.ts]
+import { render } from "../../dist/server/entry.mjs";
 
 export default async (request: Request) => {
   const html = await render(request);
@@ -139,8 +139,8 @@ export default async (request: Request) => {
 };
 ```
 
-```ts [.zurich/ssr.ts]
-import { render } from "./dist/server/entry.mjs";
+```ts [.zurich/functions/ssr.ts]
+import { render } from "../../dist/server/entry.mjs";
 
 export default async (request: Request) => {
   const html = await render(request);
@@ -206,8 +206,8 @@ class: authored
   </g>
   <g v-click="5">
     <path d="M534 63V83H693V115" fill="none" stroke="#94a3b8" stroke-width="2" />
-    <rect x="594" y="82" width="198" height="25" fill="#111111" />
-    <text x="693" y="103" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 18px">.zurich/ssr.ts</text>
+    <rect x="558" y="82" width="270" height="25" fill="#111111" />
+    <text x="693" y="103" text-anchor="middle" fill="#67e8f9" font-family="monospace" style="font-size: 18px">.zurich/functions/ssr.ts</text>
     <rect x="528" y="115" width="330" height="76" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
     <image href="/zurich-cloud.svg" x="546" y="128" width="142" height="23" />
     <text x="840" y="149" text-anchor="end" fill="#f8fafc" style="font-size: 24px">Functions</text>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ step: number }>();
+defineProps<{ step: number; metadata?: boolean; settled?: boolean }>();
 
 const connections = [
   {
@@ -45,7 +45,7 @@ const connections = [
   <svg
     viewBox="0 0 868 364"
     role="img"
-    :class="{ 'focus-plugins': step >= 4 && step < 7 }"
+    :class="{ 'focus-plugins': step >= 4 && step < 7, settled }"
     aria-label="Both platform integrations connect to Vite and ZurichCloud. The adapter connects directly to its framework; a red broken arrow marks the unavailable framework-specific connection from the Vite plugin."
   >
     <defs>
@@ -84,11 +84,17 @@ const connections = [
       </g>
     </g>
 
-    <g class="blocked-connection reveal" :class="{ visible: step >= 6 }">
+    <g class="blocked-connection reveal" :class="{ visible: step >= 6 && !metadata }">
       <path class="blocked-shaft" d="M190 232v-56" />
       <path class="blocked-shaft" d="M190 154v-25" />
       <path d="m185 136 5-7 5 7" />
       <path class="blocked-cross" d="m184 158 12 12m0-12-12 12" />
+    </g>
+
+    <g class="metadata-connection reveal" :class="{ visible: metadata }">
+      <path d="M190 232V129m-5 7 5-7 5 7" />
+      <rect x="83" y="151" width="147" height="59" rx="8" />
+      <text x="156" y="175" text-anchor="middle">Deployment<tspan x="156" dy="23">metadata?</tspan></text>
     </g>
 
     <rect x="8" y="0" width="852" height="44" rx="9" />
@@ -210,6 +216,11 @@ marker path {
 .blocked-cross {
   stroke-width: 2.5;
 }
+.metadata-connection path { fill: none; stroke: #67e8f9; stroke-width: 2; stroke-dasharray: 5 4; }
+.metadata-connection rect { fill: #142c34; stroke: #67e8f9; }
+.metadata-connection text { fill: #a5f3fc; font-size: 21px; }
+.settled .shown .draw-arrow { animation: none; stroke-dashoffset: 0; }
+.settled .shown .arrow-head { animation: none; opacity: 1; }
 
 .svelte-side {
   transition: opacity 500ms ease;

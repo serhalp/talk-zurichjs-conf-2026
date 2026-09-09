@@ -10,9 +10,9 @@ class: authored
 <div class="wrapper-code">
 
 <!-- prettier-ignore -->
-```ts [.zurich/ssr.ts]
+```ts [.zurich/functions/ssr.ts]
 import { render } from
-  "./dist/server/entry.mjs";
+  "../../dist/server/entry.mjs";
 
 export default async (request: Request) => {
   const html = await render(request);
@@ -302,7 +302,7 @@ export default function zurichCloud(): AstroIntegration {
     build: {
       client: new URL("./dist/client/", config.root),
       server: new URL("./.zurich/", config.root),
-      serverEntry: "ssr.mjs",
+      serverEntry: "functions/ssr.mjs",
     },
     vite: { ssr: { noExternal: true } },
   });
@@ -503,7 +503,8 @@ dist/client/         # Publish directory
   _astro/            # Browser JS + CSS
   …
 .zurich/
-  ssr.mjs            # Our handler + Astro's server code
+  functions/
+    ssr.mjs          # Our handler + Astro's server code
   …                  # Supporting server chunks and assets
 ```
 
@@ -796,7 +797,7 @@ class: authored
   <ReactRouterArrival :revealed="$clicks >= 1" />
 </div>
 
-<p class="mb-6">No adapter API! It's just Vite. <span v-click="1">Users install our Vite plugin:</span></p>
+<p class="mb-6">No adapter API!<sup>*</sup> It's just Vite. <span v-click="1">Users install our Vite plugin:</span></p>
 
 ````md magic-move [vite.config.ts] {at:1} {duration:700}
 ```ts
@@ -829,8 +830,10 @@ export default defineConfig({
     <path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
     <path d="M7 9h10M7 13h6" />
   </svg>
-  <span>But what if they need to talk to each other? More on that soon 👀</span>
+  <span>But what if they need to talk to each other? More on that later 👀</span>
 </p>
+
+<div class="absolute bottom-5 right-14 text-lg text-slate-400 italic">* It's complicated.</div>
 
 <style>
 h1 { margin-bottom: 12px !important; }
@@ -953,7 +956,7 @@ export default defineNitroPreset({
   entry: "./runtime/entrypoint",
   output: {
     publicDir: "{{ rootDir }}/dist/client",
-    serverDir: "{{ rootDir }}/.zurich/functions/ssr",
+    serverDir: "{{ rootDir }}/.zurich/functions",
   },
 }, { name: "zurich-cloud", url: import.meta.url });
 ```
@@ -965,7 +968,7 @@ export default defineNitroPreset({
   entry: "./runtime/entrypoint",
   output: {
     publicDir: "{{ rootDir }}/dist/client",
-    serverDir: "{{ rootDir }}/.zurich/functions/ssr",
+    serverDir: "{{ rootDir }}/.zurich/functions",
   },
   hooks: {
     compiled(nitro) { /* Routing, redirects, headers… */ },

@@ -13,7 +13,10 @@ clicks: 8
 <div v-click="4" class="metadata-item metadata-more">…?</div>
 
 <div class="metadata-detail" :class="{ 'detail-hidden': $clicks < 5 }">
+<div class="metadata-verdict-row">
+<span class="metadata-verdict-question"><span class="question-icon" aria-hidden="true">?</span>Belongs in Vite core?</span>
 <div :key="$clicks" class="metadata-verdict" :class="$clicks === 5 ? 'verdict-no' : $clicks === 8 ? 'verdict-unknown' : 'verdict-maybe'">{{ $clicks === 5 ? 'NO' : $clicks === 8 ? 'no idea' : 'maybe' }}</div>
+</div>
 <div class="metadata-example" :class="{ 'example-hidden': $clicks !== 5 }">
 
 <!-- prettier-ignore -->
@@ -79,7 +82,10 @@ routeRules: {
 .reviewing-features .metadata-item.active { opacity: 1; border-left-color: #e2e8f0; }
 .metadata-detail { grid-column: 2; grid-row: 1 / span 5; justify-self: end; align-self: start; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: end; align-items: start; gap: 16px; max-width: 100%; transition: opacity 350ms; }
 .metadata-example, .metadata-skew-example { grid-area: 2 / 1; }
-.metadata-verdict { grid-area: 1 / 1; }
+.metadata-verdict-row { grid-area: 1 / 1; display: flex; align-items: center; gap: 16px; }
+.metadata-verdict-question { position: relative; display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1px solid #94a3b8; border-radius: 10px; background: #17202e; font-size: 22px; color: #e2e8f0; white-space: nowrap; }
+.metadata-verdict-question::after { content: ""; position: absolute; right: -5px; top: calc(50% - 5px); width: 8px; height: 8px; background: #17202e; border-top: 1px solid #94a3b8; border-right: 1px solid #94a3b8; transform: rotate(45deg); }
+.question-icon { display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid #a5f3fc; border-radius: 50%; color: #a5f3fc; font-family: sans-serif; font-size: 17px; font-weight: 700; }
 .example-hidden { visibility: hidden; pointer-events: none; animation: none !important; }
 .detail-hidden { opacity: 0; visibility: hidden; }
 .metadata-example { width: max-content; max-width: 100%; animation: metadata-example-in 400ms ease both; }
@@ -154,10 +160,17 @@ clicks: 5
 ---
 level: 2
 class: authored future-section metadata-teaser
-clicks: 2
+clicks: 4
 ---
 
 # <span class="gap-number">4</span> Exploring deployment metadata
+
+<Transition name="teaser-stage" mode="out-in">
+<div v-if="$clicks < 2" key="question" class="teaser-boundary">
+<p class="teaser-cake">What if we could have our cake and eat it too?</p>
+<FrameworkBoundary :step="6" :metadata="$clicks >= 1" settled />
+</div>
+<div v-else key="metadata">
 
 <p class="teaser-premise">A way for frameworks and platforms to coordinate.</p>
 
@@ -169,7 +182,7 @@ clicks: 2
   <div>Platform<span>What I support</span></div>
 </div>
 
-<div v-click="1" class="teaser-collaboration">
+<div v-click="3" class="teaser-collaboration">
   <p>Designing this together:</p>
   <div class="teaser-teams">
     <span><img src="/netlify.svg" alt="" />Netlify</span>
@@ -179,11 +192,19 @@ clicks: 2
   </div>
 </div>
 
-<div v-click="2" class="teaser-credit"><img src="/vike.svg" alt="Vike" /><span>With help and prototyping from the Vike team,<br />behind Photon and Universal Deploy.</span></div>
+<div v-click="4" class="teaser-credit"><img src="/vike.svg" alt="Vike" /><span>With help and prototyping from the Vike team,<br />behind Photon and Universal Deploy.</span></div>
 
 <a class="teaser-link" href="https://github.com/vitejs/deployment-metadata">vitejs/deployment-metadata ↗</a>
+</div>
+</Transition>
 
 <style>
+.metadata-teaser .teaser-cake { margin: 16px 0 18px; font-size: 28px; }
+.teaser-boundary > svg { max-height: 328px; }
+.teaser-stage-enter-active, .teaser-stage-leave-active { transition: opacity 450ms ease, transform 450ms ease; }
+.teaser-stage-enter-from { opacity: 0; transform: translateY(8px); }
+.teaser-stage-leave-to { opacity: 0; transform: translateY(-8px); }
+@media (prefers-reduced-motion: reduce) { .teaser-stage-enter-active, .teaser-stage-leave-active { transition: none; } }
 .metadata-teaser .teaser-premise { margin: 24px 0; font-size: 28px; }
 .teaser-exchange { display: grid; grid-template-columns: 1fr 32px 1.25fr 32px 1fr; gap: 12px; align-items: center; margin: 26px 0; }
 .teaser-exchange > div { border: 1px solid #64748b; border-radius: 8px; padding: 16px 10px; text-align: center; font-size: 25px; }
@@ -208,40 +229,40 @@ clicks: 2
 ---
 level: 2
 class: authored future-section working-slide
-clicks: 4
+clicks: 5
 ---
 
-# This already works.
+# Unified platform plugins, in practice
 
-<div class="netlify-working" :class="{ 'with-solid': $clicks >= 1, 'with-rr': $clicks >= 3 }">
+<div v-click="1" class="netlify-working" :class="{ 'with-solid': $clicks >= 2, 'with-rr': $clicks >= 4 }">
   <div class="working-platform"><img src="/netlify.svg" alt="" /><span>Netlify Vite plugin</span></div>
   <svg class="working-branches" viewBox="0 0 54 130" aria-hidden="true">
-    <path :d="$clicks >= 3 ? 'M1 65H12Q20 65 20 57V26Q20 18 28 18H51m-6-5 6 5-6 5' : $clicks >= 1 ? 'M1 65H12Q20 65 20 57V42Q20 34 28 34H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 65V65Q20 65 28 65H51m-6-5 6 5-6 5'" />
-    <path v-click="1" :d="$clicks >= 3 ? 'M1 65H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 73V82Q20 90 28 90H51m-6-5 6 5-6 5'" />
-    <path v-click="3" class="rr-branch" d="M1 65H12Q20 65 20 73V104Q20 112 28 112H51m-6-5 6 5-6 5" />
+    <path :d="$clicks >= 4 ? 'M1 65H12Q20 65 20 57V26Q20 18 28 18H51m-6-5 6 5-6 5' : $clicks >= 2 ? 'M1 65H12Q20 65 20 57V42Q20 34 28 34H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 65V65Q20 65 28 65H51m-6-5 6 5-6 5'" />
+    <path v-click="2" :d="$clicks >= 4 ? 'M1 65H51m-6-5 6 5-6 5' : 'M1 65H12Q20 65 20 73V82Q20 90 28 90H51m-6-5 6 5-6 5'" />
+    <path v-click="4" class="rr-branch" d="M1 65H12Q20 65 20 73V104Q20 112 28 112H51m-6-5 6 5-6 5" />
   </svg>
   <span class="working-framework tanstack-working"><img src="/fetchable/tanstack.svg" alt="" />TanStack Start</span>
   <span class="working-site-count">Powers 100k+ sites.</span>
-  <span v-click="1" class="working-framework solid-working"><img src="/fetchable/solid.svg" alt="" />SolidStart 2</span>
-  <span v-click="3" class="working-framework rr-working"><img src="/reactrouter.svg" alt="" class="working-mono" />React Router <b>?</b></span>
+  <span v-click="2" class="working-framework solid-working"><img src="/fetchable/solid.svg" alt="" />SolidStart 2</span>
+  <span v-click="4" class="working-framework rr-working"><img src="/reactrouter.svg" alt="" class="working-mono" />React Router <b>?</b></span>
 </div>
 
 <div class="working-proof">
-  <p v-click="1" class="worked-first-try" :class="{ 'detail-hidden': $clicks >= 3 }">SolidStart 2 shipped last month. It just worked. No code changes.</p>
-  <p class="worked-first-try rr-question" :class="{ 'detail-hidden': $clicks < 3 }">React Router should be doable next, but…</p>
+  <p v-click="2" class="worked-first-try" :class="{ 'detail-hidden': $clicks >= 4 }">SolidStart 2 shipped last month. It just worked. No code changes.</p>
+  <p class="worked-first-try rr-question" :class="{ 'detail-hidden': $clicks < 4 }">React Router should be doable next, but…</p>
 </div>
 
-<div v-click="2" class="working-assumptions" :class="{ 'rr-assumptions': $clicks >= 3 }">
-  <strong :class="{ 'detail-hidden': $clicks >= 3 }">But we're relying on assumptions that hold for now:</strong>
+<div v-click="3" class="working-assumptions" :class="{ 'rr-assumptions': $clicks >= 4 }">
+  <strong :class="{ 'detail-hidden': $clicks >= 4 }">But we're relying on assumptions that hold for now:</strong>
   <div>
-    <span><i :class="{ failed: $clicks >= 3 }">{{ $clicks >= 3 ? '✕' : '✓' }}</i>Fetchable module<small v-show="$clicks >= 3">Needs a wrapper</small></span>
-    <span><i :class="{ caveat: $clicks >= 3 }">{{ $clicks >= 3 ? '△' : '✓' }}</i>One server entry point<small v-show="$clicks >= 3">Unless the user splits server bundles</small></span>
-    <span><i :class="{ caveat: $clicks >= 3 }">{{ $clicks >= 3 ? '△' : '✓' }}</i>Catch-all routing<small v-show="$clicks >= 3">Custom splitting needs routing information</small></span>
+    <span><i :class="{ failed: $clicks >= 4 }">{{ $clicks >= 4 ? '✕' : '✓' }}</i>Fetchable module<small v-show="$clicks >= 4">Needs a wrapper</small></span>
+    <span><i :class="{ caveat: $clicks >= 4 }">{{ $clicks >= 4 ? '△' : '✓' }}</i>One server entry point<small v-show="$clicks >= 4">Unless the user splits server bundles</small></span>
+    <span><i :class="{ caveat: $clicks >= 4 }">{{ $clicks >= 4 ? '△' : '✓' }}</i>Catch-all routing<small v-show="$clicks >= 4">Custom splitting needs routing information</small></span>
     <span><i>✓</i>No extra coordination</span>
   </div>
 </div>
 
-<div v-click="4" class="cloudflare-working">
+<div v-click="5" class="cloudflare-working">
   <div class="working-platform"><img src="/cloudflare.svg" alt="" /><span>Cloudflare Vite plugin</span></div>
   <svg class="working-branches" viewBox="0 0 54 90" aria-hidden="true">
     <path d="M1 45H12Q20 45 20 37V30Q20 22 28 22H51m-6-5 6 5-6 5" />
@@ -299,4 +320,5 @@ clicks: 4
 - SolidStart 2: tried it; zero framework-specific changes.
 - React Router: plausible next; not Fetchable. Niche serverBundles option needs routing information.
 - Cloudflare: React Router + TanStack Start, different mechanics.
+- Next: delegate Astro/SvelteKit adapter code to the same plugin. Not done yet.
 -->
