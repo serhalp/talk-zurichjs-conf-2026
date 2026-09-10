@@ -20,20 +20,20 @@ class: authored
   ]" />
 </div>
 
-<svg v-click="2" viewBox="0 0 868 174" class="ssr-flow" role="img" aria-label="A cat represents the visitor using a browser to request hello.zurich.cloud/about. A ZurichCloud server calls Astro and returns the rendered About page.">
+<svg v-click="2" viewBox="0 0 868 174" class="ssr-flow" role="img" aria-label="A cat represents the visitor using a browser to request https://hello.zurich.cloud/about. A ZurichCloud server calls Astro and returns the rendered About page.">
   <image href="/patak-cat.png" x="2" y="48" width="78" height="78"><title>patak's cat, the visitor</title></image>
   <text x="41" y="151" text-anchor="middle" fill="#cbd5e1" style="font-size: 18px">Visitor</text>
-  <rect x="104" y="5" width="336" height="164" rx="12" fill="#17202e" stroke="#94a3b8" stroke-width="2" />
-  <path d="M104 48 H440" stroke="#94a3b8" stroke-width="2" />
-  <text x="120" y="34" fill="#e2e8f0" font-family="monospace" style="font-size: 18px">hello.zurich.cloud/<tspan fill="#f0abfc">about</tspan></text>
+  <rect x="104" y="5" width="376" height="164" rx="12" fill="#17202e" stroke="#94a3b8" stroke-width="2" />
+  <path d="M104 48 H480" stroke="#94a3b8" stroke-width="2" />
+  <text x="120" y="34" fill="#e2e8f0" font-family="monospace" style="font-size: 18px">https://hello.zurich.cloud/<tspan fill="#f0abfc">about</tspan></text>
   <text x="124" y="88" fill="#f1f5f9" style="font-size: 28px">About</text>
   <text x="124" y="120" fill="#cbd5e1" style="font-size: 22px">Hello from Zurich.</text>
   <path d="M124 139 H411 M124 151 H340" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
 
-  <path d="M456 72 H578 m-10 -7 10 7 -10 7" fill="none" stroke="#67e8f9" stroke-width="2" />
-  <text x="517" y="57" text-anchor="middle" fill="#67e8f9" style="font-size: 20px">Request</text>
-  <path d="M578 126 H456 m10 -7 -10 7 10 7" fill="none" stroke="#cbd5e1" stroke-width="2" />
-  <text x="517" y="153" text-anchor="middle" fill="#cbd5e1" style="font-size: 20px">HTML</text>
+  <path d="M496 72 H578 m-10 -7 10 7 -10 7" fill="none" stroke="#67e8f9" stroke-width="2" />
+  <text x="537" y="57" text-anchor="middle" fill="#67e8f9" style="font-size: 20px">Request</text>
+  <path d="M578 126 H496 m10 -7 -10 7 10 7" fill="none" stroke="#cbd5e1" stroke-width="2" />
+  <text x="537" y="153" text-anchor="middle" fill="#cbd5e1" style="font-size: 20px">HTML</text>
 
   <rect x="594" y="5" width="272" height="164" rx="12" fill="#1b2416" stroke="#bef264" stroke-width="2" />
   <image href="/zurich-cloud.svg" x="609" y="20" width="142" height="22"><title>ZurichCloud</title></image>
@@ -71,16 +71,16 @@ export default async (request: Request) =>
   new Response("Hello world!");
 
 export const config = {
-  path: "/functions/hello",
+  path: "/hello",
 };
 ```
 
-<svg v-click="1" class="mt-7" viewBox="0 0 868 142" role="img" aria-label="A visitor requests /functions/hello. ZurichCloud calls hello.ts and returns Hello world.">
+<svg v-click="1" class="mt-7" viewBox="0 0 868 142" role="img" aria-label="A visitor requests /hello. ZurichCloud calls hello.ts and returns Hello world.">
   <image href="/patak-cat.png" x="0" y="38" width="64" height="64" />
   <text x="32" y="127" text-anchor="middle" fill="#cbd5e1" style="font-size: 18px">Visitor</text>
   <rect x="82" y="3" width="430" height="136" rx="12" fill="#17202e" stroke="#64748b" stroke-width="2" />
   <path d="M82 47H512" stroke="#64748b" />
-  <text x="96" y="32" fill="#e2e8f0" font-family="monospace" style="font-size: 17px">hello.zurich.cloud/<tspan fill="#f0abfc">functions/hello</tspan></text>
+  <text x="96" y="32" fill="#e2e8f0" font-family="monospace" style="font-size: 17px">https://hello.zurich.cloud/<tspan fill="#f0abfc">hello</tspan></text>
   <text v-click="2" x="106" y="99" fill="#f8fafc" style="font-size: 28px">Hello world!</text>
   <path d="M528 51H606l-9 -6m9 6l-9 6" fill="none" stroke="#67e8f9" stroke-width="2" />
   <text x="567" y="32" text-anchor="middle" fill="#67e8f9" style="font-size: 18px">Request</text>
@@ -112,7 +112,7 @@ class: authored
 
 <LevelBadge :number="5">Full stack</LevelBadge>
 
-````md magic-move {at:1} {duration:700}
+````md magic-move [.zurich/functions/ssr.ts] {at:1} {duration:700}
 ```ts [.zurich/functions/ssr.ts]
 import { render } from "../../dist/server/entry.mjs";
 ```
@@ -160,7 +160,8 @@ h1 { margin-bottom: 12px !important; }
 </style>
 
 <!--
-- Generate the wrapper at build time; render at request time.
+- Framework build produces entry.mjs; our ZurichCloud Function imports it.
+- Build time: produce files. Request time: call render(request).
 -->
 
 ---
@@ -217,7 +218,7 @@ class: authored
     <image href="/patak-cat.png" x="212" y="281" width="62" height="62" />
     <rect x="294" y="276" width="400" height="71" rx="10" fill="#17202e" stroke="#64748b" stroke-width="2" />
     <path d="M294 309H694" stroke="#64748b" />
-    <text x="310" y="299" fill="#e2e8f0" font-family="monospace" style="font-size: 18px">hello.zurich.cloud/<tspan fill="#f0abfc">about</tspan></text>
+    <text x="310" y="299" fill="#e2e8f0" font-family="monospace" style="font-size: 18px">https://hello.zurich.cloud/<tspan fill="#f0abfc">about</tspan></text>
     <text x="310" y="335" fill="#f8fafc" style="font-size: 22px">About Zurich</text>
     <g :class="{ 'page-at-function': $clicks >= 5 }" class="page-roundtrip">
       <path class="page-request" marker-end="url(#summary-arrow)" fill="none" stroke="currentColor" stroke-width="2" />

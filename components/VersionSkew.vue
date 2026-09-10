@@ -11,7 +11,7 @@ defineProps<{ step: number }>();
     <image href="/patak-cat.png" x="0" y="70" width="85" height="85" />
     <rect x="108" y="22" width="300" height="170" rx="12" class="box" />
     <path d="M108 64h300" class="arrow" />
-    <text x="130" y="51" class="small">hello.zurich.cloud/about</text>
+    <text x="130" y="51" class="small">https://hello.zurich.cloud/about</text>
     <text x="258" y="105" text-anchor="middle">An open tab</text>
     <text x="258" y="150" text-anchor="middle" class="version">
       Deployment A

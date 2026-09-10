@@ -138,19 +138,8 @@ class: authored
 <LevelBadge :number="4">Zero config</LevelBadge>
 
 <div class="detection-examples">
-<div v-click="1" class="detection-file"><code>pnpm-lock.yaml</code></div>
-<div v-click="1" class="detection-arrow">→</div>
-<div v-click="1" class="detected-tool"><img class="detection-mono" src="/pnpm.svg" alt="">pnpm</div>
-<div v-click="1" class="detection-arrow">→</div>
-<div v-click="1" class="detected-setting"><div>Install dependencies</div><code>pnpm install</code></div>
-
-<div v-click="2" class="detection-file"><code>turbo.json</code></div>
-<div v-click="2" class="detection-arrow">→</div>
-<div v-click="2" class="detected-tool"><img class="detection-mono" src="/turborepo.svg" alt="">Turborepo</div>
-<div v-click="2" class="detection-arrow">→</div>
-<div v-click="2" class="detected-setting"><div>Build command</div><code class="detected-command">pnpm exec turbo build</code></div>
-
-<div v-click="3">
+<div class="detection-inputs">
+<div v-click="1" class="detection-package">
 
 ```json [package.json]
 {
@@ -160,11 +149,30 @@ class: authored
 }
 ```
 
+<img src="/vite.svg" alt="Vite" />
 </div>
-<div v-click="3" class="detection-arrow">→</div>
-<div v-click="3" class="detected-tool"><img src="/vite.svg" alt="">Vite</div>
-<div v-click="3" class="detection-arrow">→</div>
-<div v-click="3" class="detected-setting"><div>Output directory</div><code class="detected-directory">dist/</code></div>
+<div v-click="2" class="detection-file"><code>turbo.json</code><img class="detection-mono" src="/turborepo.svg" alt="Turborepo" /></div>
+<div v-click="3" class="detection-file"><code>pnpm-lock.yaml</code><img class="detection-mono" src="/pnpm.svg" alt="pnpm" /></div>
+</div>
+<div v-click="1" class="detection-arrow">→</div>
+<div v-click="1" class="detection-result">
+<div class="detected-setting">Build command</div>
+
+````md magic-move {at:2} {duration:700}
+```sh
+vite build
+```
+```sh
+turbo run build
+```
+```sh
+pnpm exec turbo run build
+```
+````
+
+<div class="detected-setting detection-output">Output directory <code class="detected-directory">dist/</code></div>
+<div v-click="3" class="detected-setting detection-install">Install dependencies <code>pnpm install</code></div>
+</div>
 
 </div>
 
@@ -173,22 +181,28 @@ class: authored
 <style>
 h1 { margin-bottom: 8px !important; }
 h2 { margin-bottom: 12px !important; }
-.detection-examples { --slidev-code-line-height: 1.2; display: grid; grid-template-columns: 300px 24px 190px 24px 1fr; column-gap: 12px; row-gap: 8px; align-items: center; }
+.detection-examples { --slidev-code-line-height: 1.2; display: grid; grid-template-columns: 350px 42px 1fr; gap: 24px; align-items: center; }
+.detection-inputs { display: grid; gap: 10px; }
+.detection-package { position: relative; }
+.detection-package > img { position: absolute; right: 14px; top: 12px; }
+.detection-inputs img { width: 30px; height: 30px; object-fit: contain; }
 .detection-examples :deep(pre code) { line-height: 1.2 !important; }
 .detection-examples :deep(pre) { padding: 8px !important; }
 .detection-arrow { color: #94a3b8; font-size: 28px; text-align: center; }
-.detection-file { padding: 10px 14px; border-left: 2px solid #45552c; background: #191d17; }
+.detection-file { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid #64748b; border-radius: 8px; background: #17202e; }
 .detection-file code { font-size: 22px; background: transparent; }
-.detected-tool { display: flex; align-items: center; gap: 12px; font-size: 24px; }
-.detected-tool img { width: 32px; height: 32px; object-fit: contain; }
 .detection-mono { filter: brightness(0) invert(1); }
 .detected-setting { font-size: 22px; line-height: 1.3; }
+.detection-result > .detected-setting:first-child { margin-bottom: 10px; }
+.detection-output, .detection-install { margin-top: 18px; }
+.detection-output code, .detection-install code { display: block; }
 .detected-setting code { display: inline-block; margin-top: 6px; font-size: 18px; white-space: nowrap; }
 .detected-command { color: #67e8f9; }
 .detected-directory { color: #fcd34d; }
 </style>
 
 <!--
-- Install → build → output directory.
+- Vite → vite build + dist/. Turbo → turbo run build. pnpm → pnpm exec turbo run build.
+- Package manager also determines the install command.
 - Infer defaults; explicit user settings win.
 -->

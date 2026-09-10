@@ -1,10 +1,13 @@
 <script setup lang="ts">
-withDefaults(
+import { computed } from "vue";
+
+const props = withDefaults(
   defineProps<{
     platforms?: boolean;
     revealed?: boolean;
     deploymentTargets?: boolean;
     focusVite?: boolean;
+    pluginsOnly?: boolean;
   }>(),
   {
     platforms: false,
@@ -20,6 +23,9 @@ const frameworks = [
   { name: "TanStack Start", logo: "/tanstack.svg" },
   { name: "SolidStart", logo: "/solid.svg" },
 ];
+const shownFrameworks = computed(() =>
+  props.pluginsOnly ? frameworks.slice(2) : frameworks,
+);
 </script>
 
 <template>
@@ -39,9 +45,9 @@ const frameworks = [
     "
   >
     <g
-      v-for="(framework, index) in frameworks"
+      v-for="(framework, index) in shownFrameworks"
       :key="framework.name"
-      :transform="`translate(${84 + index * 175}, 0)`"
+      :transform="`translate(${props.pluginsOnly ? 144 + index * 290 : 84 + index * 175}, 0)`"
       class="reveal"
       :class="{ faded: focusVite }"
     >
@@ -60,17 +66,15 @@ const frameworks = [
       :class="{ 'is-hidden': !revealed, focused: focusVite }"
     >
       <rect x="4" y="110" width="860" height="62" rx="12" class="box" />
-      <image href="/vite.svg" x="28" y="120" width="42" height="42" />
-      <text x="86" y="152" class="vite-name">Vite</text>
-      <text
-        v-if="platforms"
-        x="434"
-        y="152"
-        text-anchor="middle"
-        class="detail"
-      >
-        🧴 Glue?
-      </text>
+      <image v-if="!platforms" href="/vite.svg" x="28" y="120" width="42" height="42" />
+      <text v-if="!platforms" x="86" y="152" class="vite-name">Vite</text>
+      <foreignObject v-if="platforms" x="4" y="110" width="860" height="62">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="vite-glue">
+          <img src="/vite.svg" alt="" />
+          <span class="vite-name">Vite</span>
+          <span class="glue-label">🧴 Glue?</span>
+        </div>
+      </foreignObject>
       <g v-else>
         <g
           v-for="(label, index) in ['Client build', 'Server build', 'Dev']"
@@ -178,6 +182,9 @@ image[href="/reactrouter.svg"] {
 .vite-name {
   font-size: 30px;
 }
+.vite-glue { display: flex; align-items: center; justify-content: center; gap: 16px; height: 100%; color: #f8fafc; }
+.vite-glue img { width: 42px; height: 42px; }
+.glue-label { margin-left: 12px; font-size: 24px; }
 .detail {
   font-size: 24px;
 }

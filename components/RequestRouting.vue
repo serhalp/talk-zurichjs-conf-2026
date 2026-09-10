@@ -18,7 +18,7 @@ defineProps<{ routed: boolean }>();
       :transform="`translate(0, ${index * 100})`"
     >
       <rect x="122" y="24" width="350" height="68" rx="8" class="box" />
-      <text x="138" y="52" class="host">hello.zurich.cloud</text>
+      <text x="138" y="52" class="host">https://hello.zurich.cloud</text>
       <text x="138" y="80" class="path">{{ route.url }}</text>
       <path v-if="routed" d="M484 58h87m-8-7 8 7-8 7" class="arrow" />
       <text v-else x="527" y="70" class="question" text-anchor="middle">?</text>

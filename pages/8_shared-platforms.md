@@ -151,7 +151,7 @@ clicks: 2
 # Could we write just one plugin per platform?
 
 <div class="future-status">The goal</div>
-<SharedViteGraph platforms />
+<SharedViteGraph platforms plugins-only />
 
 <p v-click="1" class="platform-roles">Frameworks describe their output via Vite.<br />Platforms adapt output via Vite.</p>
 <p v-click="2" class="goal-followup">Why not?</p>
