@@ -37,3 +37,10 @@ clicks: 1
     <div><img src="/npmx.svg" alt=""><span><strong>npmx</strong> core team</span></div>
   </div>
 </div>
+
+<!--
+- Phil, Netlify: making frameworks work on our platform.
+- Before joining, no idea what that involved. A peek behind the scenes.
+- Imagine building our own hosting platform: ZurichCloud. What would it take?
+- Next slide: “Let's start with the simplest case: a few static files.”
+-->

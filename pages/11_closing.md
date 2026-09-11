@@ -70,13 +70,9 @@ class: authored closing-coop
   <div class="closing-invitation">
     <LevelBadge :number="8">Frontend cloud, co-op mode</LevelBadge>
     <CoopPlayers active />
-    <p>Bring your framework.<br />Bring your platform.</p>
   </div>
-  <div class="closing-resources">
-    <a href="https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/">Deep dive on deploying Next.js</a>
-    <a href="https://fetchable.org">fetchable.org</a>
-    <a href="https://github.com/vitejs/vite/discussions/20907">The Vite discussion</a>
-    <a href="https://github.com/vitejs/deployment-metadata">vitejs/deployment-metadata</a>
+  <div class="closing-slides">
+    <a href="https://talk-zurichjs-conf-2026.netlify.app">These slides<span>talk-zurichjs-conf-2026.netlify.app</span></a>
   </div>
 </div>
 
@@ -94,10 +90,9 @@ class: authored closing-coop
 .closing-invitation :deep(.level-number) { font-size: 15px; white-space: nowrap; padding: 10px; }
 .closing-invitation .co-op-players { margin: 24px 0 16px; gap: 12px; justify-content: flex-start; }
 .closing-invitation :deep(.player) { width: 48px; }
-.closing-coop .closing-invitation p { font-size: 30px; line-height: 1.5; margin: 20px 0 0; }
-.closing-resources { display: flex; flex-direction: column; gap: 18px; padding-left: 26px; border-left: 1px solid #475569; }
-.closing-resources a { width: fit-content; font-size: 25px; line-height: 1.3; }
-.closing-resources span { display: block; margin-top: 5px; font-size: 20px; color: #cbd5e1; }
+.closing-slides { align-self: center; }
+.closing-slides a { font-size: 30px; line-height: 1.3; }
+.closing-slides span { display: block; margin-top: 12px; font-size: 20px; color: #cbd5e1; }
 .closing-contact { position: absolute; bottom: 35px; left: 56px; right: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid #475569; font-size: 23px; }
 .closing-contact strong { font-size: 26px; font-weight: 400; }
 .closing-contact a { display: flex; align-items: center; gap: 8px; border-bottom: none !important; text-decoration: none !important; }
@@ -108,3 +103,22 @@ class: authored closing-coop
 <!--
 - Thank the collaborators; invite more frameworks and platforms.
 -->
+
+---
+hideInToc: true
+class: authored further-information
+---
+
+# Further information
+
+<div class="further-links">
+  <a href="https://nextjs.org/ecosystem-working-group">Next.js Ecosystem Working Group</a>
+  <a href="https://www.netlify.com/blog/the-next-js-adapter-api-just-shipped-here-s-what-comes-next/">Deep dive on deploying Next.js</a>
+  <a href="https://fetchable.org">fetchable.org</a>
+  <a href="https://github.com/vitejs/vite/discussions/20907">The Vite discussion</a>
+  <a href="https://github.com/vitejs/deployment-metadata">vitejs/deployment-metadata</a>
+</div>
+
+<style>
+.further-links { display: flex; flex-direction: column; align-items: flex-start; gap: 32px; margin-top: 50px; font-size: 30px; }
+</style>

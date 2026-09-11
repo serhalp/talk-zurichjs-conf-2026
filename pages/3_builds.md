@@ -31,8 +31,7 @@ class: authored
       <path d="M7 9h10M7 13h6" />
     </svg>
     <div>
-      <div>The user might use a single-page app (SPA) framework like React or Vue.</div>
-      <div>But ZurichCloud doesn't actually care about that.</div>
+      <div>P.S.: ZurichCloud doesn't actually care whether SPA frameworks like React or Vue are used.</div>
     </div>
   </div>
 </div>
