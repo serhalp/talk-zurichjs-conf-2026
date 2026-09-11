@@ -52,7 +52,7 @@ clicks: 1
 ---
 level: 2
 class: authored
-clicks: 18
+clicks: 17
 ---
 
 # Next.js: build first, "adapt" later
@@ -60,20 +60,13 @@ clicks: 18
 <img src="/nextjs.svg" alt="Next.js" class="absolute right-14 top-10 w-12 h-12 brightness-0 invert" />
 
 <NextOutputWalkthrough>
-<div v-if="$clicks <= 1" key="diagram" class="next-pipeline-stage">
+<div v-if="$clicks <= 0" key="diagram" class="next-pipeline-stage">
   <NextOutputPipeline />
-  <div v-click="1" class="pipeline-callout">
-    <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-      <path d="M7 9h10M7 13h6" />
-    </svg>
-    <span>This is a whole other talk though...</span>
-  </div>
 </div>
-<div v-else-if="[2, 3, 5, 6].includes($clicks)" key="listing" class="next-directory">
+<div v-else-if="[1, 2, 4, 5].includes($clicks)" key="listing" class="next-directory">
 
 <!-- prettier-ignore -->
-```text [Build output] {all|2|all|all|7} {at:3}
+```text [Build output] {all|2|all|all|7} {at:2}
 .next/
 ├─ prerender-manifest.json
 ├─ required-server-files.json
@@ -88,10 +81,10 @@ clicks: 18
 
 </div>
 
-<div v-else key="preview" class="next-manifest-layout" :class="{ 'minimal-mode-show': $clicks === 13 }">
+<div v-else key="preview" class="next-manifest-layout" :class="{ 'minimal-mode-show': $clicks === 12 }">
 <div class="manifest-preview">
 <Transition name="manifest-step" mode="out-in">
-<div v-if="$clicks === 4" key="prerender">
+<div v-if="$clicks === 3" key="prerender">
 
 <!-- prettier-ignore -->
 ```json [prerender-manifest.json] {4-6}
@@ -107,7 +100,7 @@ clicks: 18
 ```
 
 </div>
-<div v-else-if="$clicks >= 14" key="output-tree">
+<div v-else-if="$clicks >= 13" key="output-tree">
 
 <!-- prettier-ignore -->
 ```text [Build output]
@@ -127,7 +120,7 @@ clicks: 18
 <div v-else key="middleware">
 
 <!-- prettier-ignore -->
-````md magic-move [server/middleware-manifest.json] {at:9} {duration:700}
+````md magic-move [server/middleware-manifest.json] {at:8} {duration:700}
 ```json {5}
 {
   "middleware": {
@@ -157,49 +150,47 @@ clicks: 18
 </Transition>
 </div>
 <div class="manifest-explanation">
-  <template v-if="$clicks === 4">
+  <template v-if="$clicks === 3">
     <p>Reverse-engineer the types and semantics of every field. <img src="/only-option-cat.png" alt="" class="manifest-cat" /></p>
     <p>Parse the manifest file.</p>
     <p>Translate each prerendered page's metadata to a format ZurichCloud expects.</p>
   </template>
-  <template v-else-if="$clicks === 7 || $clicks === 8">
+  <template v-else-if="$clicks === 6 || $clicks === 7">
     <p>Reverse-engineer the types and semantics of every field. Again. <img src="/only-option-cat.png" alt="" class="manifest-cat" /></p>
     <p>Parse the manifest file.</p>
     <p>Translate its matchers into routing rules for ZurichCloud Edge Functions.</p>
-    <div v-click="8" class="edge-thought">
+    <div v-click="7" class="edge-thought">
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <path d="M5 90Q85 85 85 8m-7 10 7-10 7 10" />
       </svg>
       Oh yeah, your platform needs Edge Functions now
     </div>
   </template>
-  <template v-else-if="$clicks >= 9 && $clicks <= 13">
+  <template v-else-if="$clicks >= 8 && $clicks <= 12">
     <p>Then mutate the manifest on disk</p>
-    <p v-click="10">to prevent the Next.js server from running middleware twice</p>
-    <p v-click="11">because this build was meant for standalone Node.js servers</p>
-    <p v-click="12">but ZurichCloud is a serverless platform.</p>
+    <p v-click="9">to prevent the Next.js server from running middleware twice</p>
+    <p v-click="10">because this build was meant for standalone Node.js servers</p>
+    <p v-click="11">but ZurichCloud is a serverless platform.</p>
   </template>
   <template v-else>
     <p>Private implementation details</p>
-    <p v-click="15">No documented contract</p>
-    <p v-click="16">No types, no schemas</p>
-    <p v-click="17">No SemVer guarantees. Can change at any time.</p>
-    <p v-click="18">... and you'll need branching logic to keep supporting every variation indefinitely.</p>
+    <p v-click="14">No documented contract</p>
+    <p v-click="15">No types, no schemas</p>
+    <p v-click="16">No SemVer guarantees. Can change at any time.</p>
+    <p v-click="17">... and you'll need branching logic to keep supporting every variation indefinitely.</p>
   </template>
 </div>
-<div v-if="$clicks >= 9 && $clicks <= 13" v-click="13" class="serverless-aside">
+<div v-if="$clicks >= 8 && $clicks <= 12" v-click="12" class="serverless-aside">
   <p>Oh, there's a secret, even less documented mode for <em>a</em> serverless platform, but you <em>really</em> don't want to go there.</p>
-  <img v-if="$clicks === 13" src="/war-flashback-dog.gif" alt="Stains the dog having war flashbacks" class="war-flashback-dog" />
+  <img v-if="$clicks === 12" src="/war-flashback-dog.gif" alt="Stains the dog having war flashbacks" class="war-flashback-dog" />
 </div>
-<img v-if="$clicks === 13" src="/next-minimal-mode.png" alt="Next.js source sets minimalMode from minimalMode or process.env.NEXT_PRIVATE_MINIMAL_MODE" class="minimal-mode-source" />
+<img v-if="$clicks === 12" src="/next-minimal-mode.png" alt="Next.js source sets minimalMode from minimalMode or process.env.NEXT_PRIVATE_MINIMAL_MODE" class="minimal-mode-source" />
 </div>
 </NextOutputWalkthrough>
 
 <style>
 h1 { margin-bottom: 12px !important; }
 .next-pipeline-stage { position: relative; padding-top: 20px; }
-.pipeline-callout { position: absolute; left: 124px; bottom: 36px; display: flex; align-items: center; gap: 12px; color: #cbd5e1; }
-.pipeline-callout svg { color: #bef264; }
 .next-directory { width: 620px; margin: 24px auto 0; }
 .next-directory :deep(pre), .next-directory :deep(code) { line-height: 1.4 !important; }
 .next-manifest-layout { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; }
