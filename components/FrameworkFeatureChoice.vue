@@ -11,8 +11,8 @@ const features = [
 <template>
   <div class="feature-choice" :class="{ coordinating: step >= 5 }">
     <p class="premise">
-      By choosing a Vite-only architecture, framework authors draw a line around
-      conveniences they can offer.
+      By choosing a Vite-only architecture, framework authors constrain what they
+      can offer.
     </p>
 
     <div class="configuration-map">

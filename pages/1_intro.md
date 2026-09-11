@@ -37,27 +37,3 @@ clicks: 1
     <div><img src="/npmx.svg" alt=""><span><strong>npmx</strong> core team</span></div>
   </div>
 </div>
-
----
-hideInToc: true
-class: authored talk-overview
----
-
-# Here's the plan.
-
-<div class="talk-plan">
-  <div><span class="plan-number">01</span><span>Build a frontend cloud.</span><img src="/zurich-cloud-symbol.svg" alt="ZurichCloud" /></div>
-  <div><span class="plan-number">02</span><span>Get <em>all</em> the frameworks working on it.</span><div class="plan-logos"><img class="plan-mono" src="/astro.svg" alt="Astro" /><img class="plan-mono" src="/svelte.svg" alt="SvelteKit" /></div></div>
-  <div><span class="plan-number">03</span><span>Work together to make it better.</span><div class="plan-logos"><img src="/netlify.svg" alt="Netlify" /><img src="/cloudflare.svg" alt="Cloudflare" /><img src="/vite.svg" alt="Vite" /></div></div>
-</div>
-
-<style>
-.talk-plan { display: flex; flex-direction: column; margin-top: 50px; }
-.talk-plan > div { display: grid; grid-template-columns: 58px 1fr 146px; align-items: center; gap: 20px; min-height: 102px; border-bottom: 1px solid #475569; font-size: 32px; }
-.talk-plan > div:first-child { border-top: 1px solid #475569; }
-.plan-number { font-family: var(--slidev-code-font-family); font-size: 23px; color: #bef264; }
-.talk-plan img { width: 38px; height: 38px; object-fit: contain; }
-.talk-plan > div > img { justify-self: end; }
-.plan-logos { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
-.plan-logos .plan-mono { filter: brightness(0) invert(1); }
-</style>

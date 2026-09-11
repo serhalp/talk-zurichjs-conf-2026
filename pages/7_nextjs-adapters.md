@@ -289,9 +289,9 @@ clicks: 5
 <div class="adapter-status-list">
   <div><span class="status-platform">Vercel</span><span>Open source. Used on Vercel.</span></div>
   <div v-click="1"><span class="status-platform">Kubernetes</span><span>Very soon. By James Daniels (formerly Google).</span></div>
-  <div v-click="2"><span class="status-platform">Netlify</span><span>New adapter in development.</span></div>
-  <div v-click="3"><span class="status-platform">Cloudflare</span><span>New adapter in development.</span></div>
-  <div v-click="4"><span class="status-platform">OpenNext AWS</span><span>New adapter in development.</span></div>
+  <div v-click="2"><span class="status-platform">Netlify</span><span>Soon™</span></div>
+  <div v-click="3"><span class="status-platform">Cloudflare</span><span>Soon™</span></div>
+  <div v-click="4"><span class="status-platform">OpenNext AWS</span><span>Soon™</span></div>
   <div v-click="5" class="redacted-row">
     <span class="redacted-platform"><span v-if="$clicks >= 5" class="redacted-stamp">REDACTED</span></span>
     <span>New adapter in development.</span>

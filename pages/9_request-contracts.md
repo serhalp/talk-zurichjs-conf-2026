@@ -60,7 +60,7 @@ handle(nodeRequest, nodeResponse);
 
 </div>
 
-<p v-click="1">Fortuitously, the ecosystem has recently converged on a useful shape…</p>
+<p v-click="1">Fortuitously, the ecosystem has been converging on a convention…</p>
 
 <style>
 .invocation-examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; align-items: start; }

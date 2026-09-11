@@ -386,6 +386,7 @@ h1 { margin-bottom: 16px !important; }
 - config:done: resolved config; register the adapter.
 - serverEntrypoint = our input module.
 - build.server + serverEntry = output directory + filename.
+- Click 13: Astro bundles our serverEntrypoint into build.server/serverEntry; ZurichCloud runs that output.
 - ssr.noExternal: bundle JS dependencies.
 - astro/app/entrypoint: createApp() → app.render(Request) → Response.
 - Forward Astro’s Set-Cookie headers.
@@ -825,8 +826,8 @@ export default defineConfig({
   <span>The framework and the platform <u>only talk to Vite</u>.</span>
 </div>
 
-<p v-click="3" class="mt-6 flex items-start gap-3 text-[#cbd5e1]">
-  <svg class="w-6 h-6 shrink-0 mt-1 text-[#bef264]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<p v-click="3" class="framework-aside">
+  <svg class="aside-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
     <path d="M7 9h10M7 13h6" />
   </svg>

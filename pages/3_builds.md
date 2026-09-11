@@ -41,18 +41,6 @@ h1 { margin-bottom: 12px !important; }
 h2 { margin-bottom: 12px !important; }
 .build-overview { margin-top: 22px; line-height: 1.35; }
 .bundling-definition { margin-top: 42px; }
-.framework-aside {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-top: 28px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  background: #1b2018;
-  color: #cbd5e1;
-  font-size: 22px;
-}
-.aside-icon { flex: 0 0 24px; width: 24px; height: 24px; margin-top: 3px; color: #bef264; }
 </style>
 
 <!--

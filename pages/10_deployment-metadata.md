@@ -14,7 +14,7 @@ clicks: 8
 
 <div class="metadata-detail" :class="{ 'detail-hidden': $clicks < 5 }">
 <div class="metadata-verdict-row">
-<span class="metadata-verdict-question"><span class="question-icon" aria-hidden="true">?</span>Belongs in Vite core?</span>
+<span class="framework-aside metadata-verdict-question"><svg class="aside-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /><path d="M7 9h10M7 13h6" /></svg><span>Belongs in Vite core?</span></span>
 <div :key="$clicks" class="metadata-verdict" :class="$clicks === 5 ? 'verdict-no' : $clicks === 8 ? 'verdict-unknown' : 'verdict-maybe'">{{ $clicks === 5 ? 'NO' : $clicks === 8 ? 'no idea' : 'maybe' }}</div>
 </div>
 <div class="metadata-example" :class="{ 'example-hidden': $clicks !== 5 }">
@@ -71,7 +71,7 @@ routeRules: {
 </div>
 </div>
 
-<p v-click="4" class="future-aside" :class="{ 'metadata-aside-dim': $clicks >= 5 }">Useful platform features. Not all of them belong in Vite core.</p>
+<p v-click="4" class="framework-aside metadata-bottom-aside" :class="{ 'metadata-aside-dim': $clicks >= 5 }"><svg class="aside-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /><path d="M7 9h10M7 13h6" /></svg><span>Useful platform features. Not all of them belong in Vite core.</span></p>
 
 <style>
 .metadata-examples-slide h1 { margin-bottom: 14px; }
@@ -83,9 +83,7 @@ routeRules: {
 .metadata-detail { grid-column: 2; grid-row: 1 / span 5; justify-self: end; align-self: start; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: end; align-items: start; gap: 16px; max-width: 100%; transition: opacity 350ms; }
 .metadata-example, .metadata-skew-example { grid-area: 2 / 1; }
 .metadata-verdict-row { grid-area: 1 / 1; display: flex; align-items: center; gap: 16px; }
-.metadata-verdict-question { position: relative; display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1px solid #94a3b8; border-radius: 10px; background: #17202e; font-size: 22px; color: #e2e8f0; white-space: nowrap; }
-.metadata-verdict-question::after { content: ""; position: absolute; right: -5px; top: calc(50% - 5px); width: 8px; height: 8px; background: #17202e; border-top: 1px solid #94a3b8; border-right: 1px solid #94a3b8; transform: rotate(45deg); }
-.question-icon { display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid #a5f3fc; border-radius: 50%; color: #a5f3fc; font-family: sans-serif; font-size: 17px; font-weight: 700; }
+.metadata-examples-slide .metadata-verdict-question { margin-top: 0; white-space: nowrap; }
 .example-hidden { visibility: hidden; pointer-events: none; animation: none !important; }
 .detail-hidden { opacity: 0; visibility: hidden; }
 .metadata-example { width: max-content; max-width: 100%; animation: metadata-example-in 400ms ease both; }
@@ -101,11 +99,11 @@ routeRules: {
 .skew-line { stroke: #64748b; }
 .skew-route { fill: none; stroke: #bef264; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .new-deployment { opacity: .5; }
-.metadata-examples-slide .future-aside { margin-top: 10px; padding: 12px 18px; transition: opacity 350ms; }
+.metadata-examples-slide .metadata-bottom-aside { margin-top: 10px; transition: opacity 350ms; }
 .metadata-aside-dim { opacity: .22; }
 @keyframes verdict-in { from { opacity: 0; transform: scale(.85) rotate(-5deg); } to { opacity: 1; transform: scale(1) rotate(-2deg); } }
 @keyframes metadata-example-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-@media (prefers-reduced-motion: reduce) { .metadata-item, .metadata-detail, .future-aside { transition: none !important; } .metadata-verdict, .metadata-example, .metadata-skew-example { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .metadata-item, .metadata-detail, .metadata-bottom-aside { transition: none !important; } .metadata-verdict, .metadata-example, .metadata-skew-example { animation: none; } }
 </style>
 
 <!--
